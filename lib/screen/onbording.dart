@@ -1,20 +1,21 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:projects/login.dart';
 
-void main() {
-  runApp(
-    DevicePreview(
-      enabled: true,
-      tools: [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => OnBorading(),
-    ),
-  );
-  // runApp(MaterialApp(
-  //   debugShowCheckedModeBanner: false,
-  //     home: OnBorading()));
-}
+// void main() {
+//   runApp(
+//     DevicePreview(
+//       enabled: true,
+//       tools: [
+//         ...DevicePreview.defaultTools,
+//       ],
+//       builder: (context) => OnBorading(),
+//     ),
+//   );
+//   // runApp(MaterialApp(
+//   //   debugShowCheckedModeBanner: false,
+//   //     home: OnBorading()));
+// }
 
 class OnBorading extends StatefulWidget {
   const OnBorading({super.key});
@@ -69,7 +70,7 @@ class _OnBoradingState extends State<OnBorading> {
                 ),
               ]),
               SizedBox(
-                height: 130,
+                height: 90,
               ),
               Text(
                 "Your photos will reach",
@@ -100,41 +101,46 @@ class _OnBoradingState extends State<OnBorading> {
                     width: 40,
                     //  width: MediaQuery.of(context).size.width * .2,
                   ),
-                  Material(
-                    elevation: 5.0,
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * .8,
-                      // width: MediaQuery.of(context).size.width * .55,
-                      decoration: BoxDecoration(
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Color(0x3F000000),
-                          //     blurRadius: 4,
-                          //     offset: Offset(0, 4),
-                          //     spreadRadius: 0,
-                          //   ),
-                          // ]
-                          ),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 17),
-                            child: Center(
-                                child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            )),
-                          ),
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                    },
+                    child: Material(
+                      elevation: 5.0,
+                      color: Colors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * .8,
+                        // width: MediaQuery.of(context).size.width * .55,
+                        decoration: BoxDecoration(
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Color(0x3F000000),
+                            //     blurRadius: 4,
+                            //     offset: Offset(0, 4),
+                            //     spreadRadius: 0,
+                            //   ),
+                            // ]
+                            ),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 17),
+                              child: Center(
+                                  child: Text(
+                                "Get Started",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              )),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

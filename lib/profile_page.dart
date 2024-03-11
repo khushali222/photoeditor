@@ -1,50 +1,30 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:projects/login.dart';
-import 'package:projects/screen/onbording.dart';
-
-// void main() {
-//   runApp(
-//     DevicePreview(
-//       enabled: true,
-//       tools: [
-//         ...DevicePreview.defaultTools,
-//       ],
-//       builder: (context) => signup(),
-//     ),
-//   );
-//   // runApp(MaterialApp(
-//   //   debugShowCheckedModeBanner: false,
-//   //     home: signup()));
-// }
-
-class signup extends StatefulWidget {
-
-  const signup({Key? key,required this.name, required this.email, required this.imageUrl}) : super(key: key);
-   final String name;
-  final String email;
-  final String imageUrl;
-
-  @override
-  State<signup> createState() => _signupState();
+void main(){
+ runApp(MaterialApp(
+   debugShowCheckedModeBanner: false,
+     home: Profile()));
 }
 
-class _signupState extends State<signup> {
+class Profile extends StatefulWidget {
+  const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController creditController = TextEditingController();
   String email = "", password = "", name = "";
   String image_url = "";
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    nameController.text = widget.name;
-    emailController.text = widget.email;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:
+    return
       Scaffold(
         body:
         SingleChildScrollView(
@@ -54,61 +34,29 @@ class _signupState extends State<signup> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                SizedBox(
+                  height: 50,
+                ),
+
+                // CircleAvatar(
+                //   backgroundImage: NetworkImage(
+                //       'https://t4.ftcdn.net/jpg/05/86/91/55/240_F_586915596_gPqgxPdgdJ4OXjv6GCcDWNxTjKDWZ3JD.jpg',),
+                //   radius: 40,
+                // ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(width: 15),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                        child: Icon(Icons.arrow_back_ios_new, size: 20)),
-                    Spacer(),
-                    Container(
-                      height: 170,
-                      width: 180,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(100),
-                        ),
-                        child: Image.asset(
-                          'assets/images/signup.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        SizedBox(width: 22),
-                        const Text(
-                          "Sign up",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                    Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                'https://t4.ftcdn.net/jpg/05/86/91/55/240_F_586915596_gPqgxPdgdJ4OXjv6GCcDWNxTjKDWZ3JD.jpg'),
+                            radius: 50,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(width: 22),
-                        Text(
-                          "Create your account",
-                          style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
+                        ]),
                   ],
                 ),
+                SizedBox(height: 20,),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
@@ -118,12 +66,12 @@ class _signupState extends State<signup> {
                         decoration: InputDecoration(
                           hintText: "Name",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.person),
+                         // prefixIcon: const Icon(Icons.person),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -136,14 +84,14 @@ class _signupState extends State<signup> {
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          hintText: "Email",
+                          hintText: "Last Name",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.email),
+                         // prefixIcon: const Icon(Icons.email),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -158,14 +106,14 @@ class _signupState extends State<signup> {
                       TextFormField(
                         controller: passwordController,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: "Mobile Number",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.password),
+                        //  prefixIcon: const Icon(Icons.password),
                         ),
                         obscureText: true,
                         validator: (value) {
@@ -176,17 +124,18 @@ class _signupState extends State<signup> {
                         },
                       ),
                       const SizedBox(height: 20),
+
                       TextFormField(
                         controller: confirmpasswordController,
                         decoration: InputDecoration(
-                          hintText: "Confirm Password",
+                          hintText: "Email",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.password),
+                         // prefixIcon: const Icon(Icons.password),
                         ),
                         obscureText: true,
                         validator: (value) {
@@ -199,9 +148,30 @@ class _signupState extends State<signup> {
                         },
                       ),
                       SizedBox(height: 20),
+                      TextFormField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          hintText: "credit",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: Colors.purple.withOpacity(0.1),
+                          filled: true,
+                          // prefixIcon: const Icon(Icons.person),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Builder(
@@ -211,14 +181,14 @@ class _signupState extends State<signup> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                builderContext,
-                                MaterialPageRoute(builder: (context) => OnBorading()),
-                              );
+                              // Navigator.push(
+                              //   builderContext,
+                              //   MaterialPageRoute(builder: (context) => OnBorading()),
+                              // );
                             }
                           },
                           child: const Text(
-                            "Sign up",
+                            "Save changes",
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
@@ -231,29 +201,11 @@ class _signupState extends State<signup> {
                     },
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text("Already have an account?"),
-                    TextButton(
-                      onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-                      },
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(color: Colors.purple),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20,),
-
               ],
             ),
           ),
         ),
 
-      ),
-    );
+      );
   }
 }

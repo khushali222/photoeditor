@@ -1,131 +1,288 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-void main() {
-  runApp(
-    DevicePreview(
-      enabled: true,
-      tools: [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => LoginPage(),
-    ),
-  );
-  // runApp(MaterialApp(
-  //   debugShowCheckedModeBanner: false,
-  //     home: OnBorading()));
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:projects/signup.dart';
+
+import 'dashbord.dart';
+import 'homepage.dart';
+  // void main()async{
+  //   //runApp(LoginPage());
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   await Firebase.initializeApp();
+  //   runApp(DevicePreview(
+  //     enabled: true,
+  //     tools: [
+  //       ...DevicePreview.defaultTools,
+  //     ],
+  //     builder: (context) => LoginPage(),
+  //   ),);
+  // }
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  String email = "";
+  String password = "";
+  String image_url = "";
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  userLogin() async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyHomePage()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user not found') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(" no user found for that email")));
+      } else if (e.code == 'wrong password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text("wrong password provided by user"),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          margin: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _image(context),
-              _header(context),
-              _inputField(context),
-              _forgotPassword(context),
-              _signup(context),
-            ],
+        body: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Spacer(),
+                    Container(
+                      height: 170,
+                      width: 190,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(100),
+                        ),
+                        child: Image.asset(
+                          'assets/images/login_pro.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20,),
+                Row(
+                  children: [
+                    SizedBox(width: 27,),
+                    Text(
+                      "Welcome Back",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    SizedBox(width: 28,),
+                    Text("Enter your credential to login"),
+                  ],
+                ),
+                // Column(
+                //   children: [
+                //     SizedBox(width: 5,),
+                //     Text(
+                //       "Welcome Back",
+                //       style: TextStyle(
+                //           fontSize: 20,
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.black),
+                //     ),
+                //     Text("Enter your credential to login"),
+                //   ],
+                // ),
+                SizedBox(height: 20,),
+                Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6,right: 6),
+                          child: TextFormField(
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              hintText: "E-mail",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide.none,
+                              ),
+                              fillColor: Colors.purple.withOpacity(0.1),
+                              filled: true,
+                              prefixIcon: const Icon(Icons.person),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              } else if (!RegExp(
+                                      r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email address';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6,right: 6),
+                          child: TextFormField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              hintText: "Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide.none,
+                              ),
+                              fillColor: Colors.purple.withOpacity(0.1),
+                              filled: true,
+                              prefixIcon: const Icon(Icons.password),
+                            ),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 3,),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  setState(() {
+                                    email = emailController.text;
+                                    password = passwordController.text;
+                                  });
+                                }
+                                userLogin();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const StadiumBorder(),
+                                padding: const EdgeInsets.symmetric(vertical: 13),
+                                backgroundColor: Colors.purple,
+                              ),
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(fontSize: 15, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Forgot password?",
+                    style: TextStyle(color: Colors.purple),
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Dont have an account? "),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>signup(name: '', email: '', imageUrl: '',)));
+                      },
+                      child: const Text("Sign Up",
+                          style: TextStyle(color: Colors.purple)),
+                    )
+                  ],
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () {
+                //         signInWithGoogle().then((_) {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => signup(
+                //                 name: nameController.text,
+                //                 email: emailController.text,
+                //                 imageUrl: image_url,
+                //               ),
+                //             ),
+                //           );
+                //         });
+                //       },
+                //       child: Image.network(
+                //         'https://cdn-icons-png.flaticon.com/128/300/300221.png',
+                //         height: 25,
+                //         width: 25,
+                //       ),
+                //     ),
+                //     SizedBox(width: 30),
+                //     Image.network(
+                //         'https://cdn-icons-png.flaticon.com/128/731/731985.png',
+                //         height: 30,
+                //         width: 30),
+                //   ],
+                // ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-  _image(context){
-    return Row(
-      children: [
-        Image.asset('assets/images/img_2.png'),
-      ],
-    );
-  }
-  _header(context) {
-    return const Column(
-      children: [
-        Text(
-          "Welcome Back",
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-        ),
-        Text("Enter your credential to login"),
-      ],
-    );
-  }
 
-  _inputField(context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextField(
-          decoration: InputDecoration(
-              hintText: "Username",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none
-              ),
-              fillColor: Colors.purple.withOpacity(0.1),
-              filled: true,
-              prefixIcon: const Icon(Icons.person)),
-        ),
-        const SizedBox(height: 10),
-        TextField(
-          decoration: InputDecoration(
-            hintText: "Password",
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none),
-            fillColor: Colors.purple.withOpacity(0.1),
-            filled: true,
-            prefixIcon: const Icon(Icons.password),
-          ),
-          obscureText: true,
-        ),
-        const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: () {
-          },
-          style: ElevatedButton.styleFrom(
-            shape: const StadiumBorder(),
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: Colors.purple,
-          ),
-          child: const Text(
-            "Login",
-            style: TextStyle(fontSize: 20),
-          ),
-        )
-      ],
-    );
-  }
-
-  _forgotPassword(context) {
-    return TextButton(
-      onPressed: () {},
-      child: const Text("Forgot password?",
-        style: TextStyle(color: Colors.purple),
-      ),
-    );
-  }
-
-  _signup(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Dont have an account? "),
-        TextButton(
-            onPressed: () {
-            },
-            child: const Text("Sign Up", style: TextStyle(color: Colors.purple),)
-        )
-      ],
-    );
-  }
+  // signInWithGoogle() async {
+  //   try {
+  //     await GoogleSignIn().signOut();
+  //     final GoogleSignIn _googleSignIn = GoogleSignIn();
+  //     final FirebaseAuth _auth = FirebaseAuth.instance;
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await _googleSignIn.signIn();
+  //     if (googleSignInAccount != null) {
+  //       setState(() {
+  //         image_url = googleSignInAccount.photoUrl.toString();
+  //         emailController.text = googleSignInAccount.email.toString();
+  //       });
+  //     }
+  //   } catch (error) {
+  //     print(error.toString());
+  //   }
+  // }
 }
 
 // class MyHomePage extends StatefulWidget {
@@ -862,5 +1019,378 @@ class LoginPage extends StatelessWidget {
 //           ),
 //         ),
 //       );
+//   }
+// }
+// class MyClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     // Define a custom path to create a stylish clipped shape
+//     // var path = Path();
+//     // path.lineTo(size.width, 0);
+//     // path.lineTo(size.width, size.height);
+//     // path.lineTo(0, size.height);
+//     // path.close();
+//     // return path;
+//    // Connect the last point to the starting point, closing the shape
+//     var path = Path();
+//
+//     path.lineTo(size.width * 0.7, 0); // Draw a line to the top-right corner
+//     path.quadraticBezierTo(size.width, 0, size.width, size.height * 0.3); // Curve to bottom-right corner
+//     path.lineTo(size.width, size.height * 0.7); // Draw a line to the bottom-right corner
+//     path.quadraticBezierTo(size.width, size.height, size.width * 0.7, size.height); // Curve to bottom-left corner
+//     path.lineTo(size.width * 0.3, size.height); // Draw a line to the bottom-left corner, leaving 30% of the width straight
+//     path.quadraticBezierTo(0, size.height, 0, size.height * 0.7); // Curve to top-left corner
+//     path.lineTo(0, size.height * 0.3); // Draw a line to the top-left corner, leaving 30% of the height straight
+//     path.close(); // Connect the last point to the starting point, closing the shape
+//
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) {
+//     return false;
+//   }
+// }
+
+// class ClipPathExample extends StatefulWidget {
+//   const ClipPathExample({Key? key}) : super(key: key);
+//
+//   @override
+//   State<ClipPathExample> createState() => _ClipPathExampleState();
+// }
+//
+// class _ClipPathExampleState extends State<ClipPathExample> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('ClipPath Example'),
+//       ),
+//       body: Center(
+//         child:
+//         ClipPath(
+//           // Define a custom path to clip the child
+//           clipper: MyClipper(),
+//           child: Container(
+//             width: 200,
+//             height: 200,
+//             decoration: BoxDecoration(
+//               gradient: LinearGradient(
+//                 colors: [Colors.orange, Colors.white, Colors.green],
+//                 begin: Alignment.topLeft,
+//                 end: Alignment.bottomRight,
+//               ),
+//             ),
+//             child: Center(
+//               child: Text(
+//                 'ClipPath',
+//                 style: TextStyle(
+//                   color: const Color.fromARGB(255, 117, 95, 95),
+//                   fontSize: 24,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class LoginPage extends StatefulWidget {
+//   @override
+//   _LoginPageState createState() => _LoginPageState();
+// }
+//
+// class _LoginPageState extends State<LoginPage> {
+//   String emailError = '';
+//   String passwordError = '';
+//   String email = "", password = "";
+//   String image_url = "";
+//   TextEditingController  nameController= TextEditingController();
+//   TextEditingController  emailController= TextEditingController();
+//   TextEditingController passwordController= TextEditingController();
+//   final _formkey = GlobalKey<FormState>();
+//   userLogin ()async{
+//     try{
+//       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+//       Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+//     }on FirebaseAuthException catch (e){
+//       if(e.code=='user not found'){
+//         ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(
+//                 backgroundColor: Colors.orangeAccent,
+//                 content: Text(" no user found for that email")));
+//       }else if(e.code=='wrong password'){
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             backgroundColor: Colors.orangeAccent,
+//             content: Text("wrong password provided by user"),),);
+//       }
+//     }
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return
+//       Scaffold(
+//       body:
+//       SingleChildScrollView(
+//         child: Container(
+//           child: Column(
+//             children: [
+//               SizedBox(height: 40,),
+//               Container(
+//                 // width: MediaQuery.of(context).size.width,
+//                 child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2q9Qi85tuW_DcgUVJoydTqScOc0yWf_4jUt14qZ_voNbtudv9mdcTA4R-Uxu6P5rIYAU&usqp=CAU',
+//                 ),
+//               ),
+//               SizedBox(height: 20,),
+//               Padding(
+//                 padding: const EdgeInsets.only(left: 20,right: 20),
+//                 child: Form(
+//                   key: _formkey,
+//                   child: Column(
+//                     children: [
+//                       // Container(
+//                       //   padding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
+//                       //   decoration: BoxDecoration(
+//                       //     color: Colors.grey[300],
+//                       //     borderRadius: BorderRadius.circular(20),
+//                       //   ),
+//                       //   child: TextFormField(
+//                       //     validator: (value){
+//                       //       if(value == null || value.isEmpty){
+//                       //         return "enter a email";
+//                       //       }
+//                       //       return null;
+//                       //     },
+//                       //     onChanged: (value) {
+//                       //       email = value;
+//                       //     },
+//                       //     controller: emailController,
+//                       //     decoration: InputDecoration(
+//                       //       border: InputBorder.none,
+//                       //       hintText: "email",
+//                       //     ),
+//                       //   ),
+//                       // ),
+//                       Container(
+//                         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+//                         decoration: BoxDecoration(
+//                           color: Colors.grey[300],
+//                           borderRadius: BorderRadius.circular(20),
+//                         ),
+//                         child: TextFormField(
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               setState(() {
+//                                 emailError = "please enter an email";
+//                               });
+//                               return null; // This will prevent the default error message from being displayed
+//                             }
+//                             setState(() {
+//                               emailError = '';
+//                             });
+//                             return null;
+//                           },
+//                           onChanged: (value) {
+//                             email = value;
+//                           },
+//                           controller: emailController,
+//                           decoration: InputDecoration(
+//                             border: InputBorder.none,
+//                             hintText: "email",
+//                           ),
+//                         ),
+//                       ),
+//                       Row(
+//                         children: [
+//                           SizedBox(width: 10,),
+//                           Text(
+//                             emailError,
+//                             style: TextStyle(
+//                               color: Colors.red,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       SizedBox(height: 25,),
+//                       // Container(
+//                       //   padding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
+//                       //   decoration: BoxDecoration(
+//                       //     color: Colors.grey[300],
+//                       //     borderRadius: BorderRadius.circular(20),
+//                       //   ),
+//                       //   child: TextFormField(
+//                       //     validator: (value){
+//                       //       if(value == null || value.isEmpty){
+//                       //         return "enter a password";
+//                       //       }
+//                       //       return null;
+//                       //     },
+//                       //     onChanged: (value) {
+//                       //       password = value;
+//                       //     },
+//                       //     controller: passwordController,
+//                       //     decoration: InputDecoration(
+//                       //       border: InputBorder.none,
+//                       //       hintText: "password",
+//                       //     ),
+//                       //   ),
+//                       // ),
+//                       Container(
+//                         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+//                         decoration: BoxDecoration(
+//                           color: Colors.grey[300],
+//                           borderRadius: BorderRadius.circular(20),
+//                         ),
+//                         child: TextFormField(
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               setState(() {
+//                                 passwordError = "please enter a password";
+//                               });
+//                               return null; // This will prevent the default error message from being displayed
+//                             }
+//                             setState(() {
+//                               passwordError = '';
+//                             });
+//                             return null;
+//                           },
+//                           onChanged: (value) {
+//                             password = value;
+//                           },
+//                           controller: passwordController,
+//                           decoration: InputDecoration(
+//                             border: InputBorder.none,
+//                             hintText: "Password",
+//                           ),
+//                         ),
+//                       ),
+//                       Row(
+//                         children: [
+//                           SizedBox(width: 10,),
+//                           Text(
+//                             passwordError,
+//                             style: TextStyle(
+//                               color: Colors.red,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       SizedBox(height: 30,),
+//                       GestureDetector(
+//                         onTap: (){
+//                           if(_formkey.currentState!.validate()){
+//                             setState(() {
+//                               email = emailController.text;
+//                               password= passwordController.text;
+//                             });
+//                           }
+//                           userLogin();
+//                         },
+//                         child: Container(
+//                           width: MediaQuery.of(context).size.width,
+//                           padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 30),
+//                           decoration: BoxDecoration(
+//                             color: Colors.deepPurple[200],
+//                             borderRadius: BorderRadius.circular(20),
+//                           ),
+//                           child: Center(child: Text("Sign In",style: TextStyle(
+//                             fontSize: 17,
+//                             fontWeight: FontWeight.bold,
+//                           ),)),
+//
+//                         ),
+//                       ),
+//                       SizedBox(height: 10,),
+//                       SizedBox(height: 10,),
+//                       TextButton(onPressed: (){
+//                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot_password()));
+//                       }, child: Text("Forgot Password ?"),
+//                       ),
+//                       SizedBox(height: 10,),
+//                       Text("OR"),
+//                       SizedBox(height: 10,),
+//                       Row(mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           GestureDetector(
+//                             // onTap: (){
+//                             //  // AuthService().signInWithGoogle(context);
+//                             //   signInWithGoogle();
+//                             //   Navigator.push(
+//                             //     context,
+//                             //     MaterialPageRoute(
+//                             //       builder: (context) => Signup_Page(
+//                             //         name: nameController.text,
+//                             //         email: emailController.text,
+//                             //         imageUrl: image_url,
+//                             //       ),
+//                             //     ),
+//                             //   );
+//                             // },
+//                             onTap: () {
+//                               signInWithGoogle().then((_) {
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                     builder: (context) => signup(
+//                                       name: nameController.text,
+//                                       email: emailController.text,
+//                                       imageUrl: image_url,
+//                                     ),
+//                                   ),
+//                                 );
+//                               });
+//                             },
+//                             child: Image.network('https://cdn-icons-png.flaticon.com/128/300/300221.png',height: 30,width: 30,),
+//                           ),
+//                           SizedBox(width: 30,),
+//                           Image.network('https://cdn-icons-png.flaticon.com/128/731/731985.png',height: 35,width: 35,),
+//
+//                         ],
+//                       ),
+//                       SizedBox(height: 10,),
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           SizedBox(height: 10,),
+//                           Text("Don't have account ?"),
+//                           // SizedBox(width: 5,),
+//                           TextButton(onPressed: (){
+//                             Navigator.push(context, MaterialPageRoute(builder: (context)=>signup(name: '', email: email, imageUrl:''),));
+//                           }, child: Text("Sign Up "),
+//                           ),
+//                         ],
+//                       ),
+//
+//                     ],
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+//
+//   signInWithGoogle() async {
+//     try {
+//       await GoogleSignIn().signOut();
+//       final GoogleSignIn _googleSignIn = GoogleSignIn();
+//       final FirebaseAuth _auth = FirebaseAuth.instance;
+//       final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+//       if (googleSignInAccount != null) {
+//         setState(() {
+//           image_url = googleSignInAccount.photoUrl.toString();
+//           emailController.text = googleSignInAccount.email.toString();
+//         });
+//       }
+//     } catch (error) {
+//       print(error.toString());
+//     }
 //   }
 // }

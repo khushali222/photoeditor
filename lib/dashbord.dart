@@ -29,17 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Enhance(),
     Ai(),
     Filters(),
-    // CartPage(
-    //   product: Product(
-    //       id: 1,
-    //       name: 'Nike air max',
-    //       category: "Out of stock",
-    //       price: 180.0,
-    //       description: 'clean lines and timeless clean lines and timelessclean lines and timelessclean lines and timelessclean lines and timelessclean lines and timeless',
-    //       image: 'assets/images/1.png',
-    //       quantitiy: 1
-    //   ),
-    // ),
+
   ];
   void _onItemTapped(int index) {
     setState(() {
