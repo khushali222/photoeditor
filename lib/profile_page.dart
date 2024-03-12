@@ -222,18 +222,27 @@ import 'package:flutter/material.dart';
 //   runApp(MyApp());
 // }
 
-class MyApp extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   // This widget is the root of your application.
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+
   TextEditingController confirmpasswordController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController creditController = TextEditingController();
-   TextEditingController mobileController = TextEditingController();
-   TextEditingController lastnameController = TextEditingController();
+
   String email = "", password = "", name = "";
+
   String image_url = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -246,7 +255,10 @@ class MyApp extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.deepPurple.shade300, Colors.deepPurple.shade200],
+                  colors: [
+                    Colors.deepPurple.shade300,
+                    Colors.deepPurple.shade200
+                  ],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   stops: [0.5, 0.9],
@@ -268,7 +280,6 @@ class MyApp extends StatelessWidget {
                               'https://avatars0.githubusercontent.com/u/28812093?s=460&u=06471c90e03cfd8ce2855d217d157c93060da490&v=4'),
                         ),
                       ),
-
                     ],
                   ),
                   SizedBox(
@@ -285,16 +296,20 @@ class MyApp extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: <Widget>[
-
                   Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),  // Adjust the value to make it smaller
+                    padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10), // Adjust the value to make it smaller
                     child: Container(
-                      padding: const EdgeInsets.only(top: 6, left: 10,right: 10),
+                      padding:
+                          const EdgeInsets.only(top: 6, left: 10, right: 10),
                       height: 50,
                       child: TextFormField(
                         controller: nameController,
@@ -302,7 +317,8 @@ class MyApp extends StatelessWidget {
                           hintText: "Name",
                           contentPadding: EdgeInsets.only(left: 10),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),  // Adjust the value for border radius
+                            borderRadius: BorderRadius.circular(
+                                10), // Adjust the value for border radius
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
@@ -319,64 +335,12 @@ class MyApp extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),  // Adjust the value to make it smaller
+                    padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10), // Adjust the value to make it smaller
                     child: Container(
-                      padding: const EdgeInsets.only(top: 6, left: 10,right: 10),
-                      height: 50,
-                      child: TextFormField(
-                        controller: lastnameController,
-                        decoration: InputDecoration(
-                          hintText: "Last Name",
-                          contentPadding: EdgeInsets.only(left: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),  // Adjust the value for border radius
-                            borderSide: BorderSide.none,
-                          ),
-                          fillColor: Colors.purple.withOpacity(0.1),
-                          filled: true,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),  // Adjust the value to make it smaller
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 6, left: 10,right: 10),
-                      height: 50,
-                      child: TextFormField(
-                        controller: mobileController,
-                        decoration: InputDecoration(
-                          hintText: "Mobile Number",
-                          contentPadding: EdgeInsets.only(left: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),  // Adjust the value for border radius
-                            borderSide: BorderSide.none,
-                          ),
-                          fillColor: Colors.purple.withOpacity(0.1),
-                          filled: true,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),  // Adjust the value to make it smaller
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 6, left: 10,right: 10),
+                      padding:
+                          const EdgeInsets.only(top: 6, left: 10, right: 10),
                       height: 50,
                       child: TextFormField(
                         controller: emailController,
@@ -384,7 +348,8 @@ class MyApp extends StatelessWidget {
                           hintText: "Email",
                           contentPadding: EdgeInsets.only(left: 10),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),  // Adjust the value for border radius
+                            borderRadius: BorderRadius.circular(
+                                10), // Adjust the value for border radius
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
@@ -399,12 +364,14 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 15),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),  // Adjust the value to make it smaller
+                    padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10), // Adjust the value to make it smaller
                     child: Container(
-                      padding: const EdgeInsets.only(top: 6, left: 10,right: 10),
+                      padding:
+                          const EdgeInsets.only(top: 6, left: 10, right: 10),
                       height: 50,
                       child: TextFormField(
                         controller: creditController,
@@ -412,7 +379,8 @@ class MyApp extends StatelessWidget {
                           hintText: "Credit",
                           contentPadding: EdgeInsets.only(left: 10),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),  // Adjust the value for border radius
+                            borderRadius: BorderRadius.circular(
+                                10), // Adjust the value for border radius
                             borderSide: BorderSide.none,
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
@@ -427,26 +395,27 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                   SizedBox(height: 10),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
-
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Builder(
                 builder: (BuildContext builderContext) {
                   return Container(
-                    padding: const EdgeInsets.only(top: 3, left: 10,right: 10),
+                    padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
                     child: ElevatedButton(
                       onPressed: () {
-                       // if (_formKey.currentState!.validate()) {
-                          // Navigator.push(
-                          //   builderContext,
-                          //   MaterialPageRoute(builder: (context) => OnBorading()),
-                          // );
-                       // }
+                        // if (_formKey.currentState!.validate()) {
+                        // Navigator.push(
+                        //   builderContext,
+                        //   MaterialPageRoute(builder: (context) => OnBorading()),
+                        // );
+                        // }
                       },
                       child: const Text(
                         "Save changes",
@@ -454,7 +423,9 @@ class MyApp extends StatelessWidget {
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(vertical: 10,),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
                         backgroundColor: Colors.purple[200],
                       ),
                     ),

@@ -1,6 +1,8 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:projects/profile_page.dart';
+import 'package:projects/screen/dashboard.dart';
 import 'package:projects/screen/onbording.dart';
 import 'package:projects/splash_screen.dart';
 
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-    //  home: MyHomePage(),
+    // home: MyHomePage(),
+   //  home: DashboardScreen(),
+     // home: LoginPage(),
       home: SplashScreen(),
     );
   }

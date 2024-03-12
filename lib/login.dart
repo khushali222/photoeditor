@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   userLogin() async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MyHomePage()));
     } on FirebaseAuthException catch (e) {
@@ -55,13 +55,13 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: SingleChildScrollView(
+        body:
+        SingleChildScrollView(
           child: Container(
             child: Column(
               children: [

@@ -48,6 +48,17 @@ dependencies:
   google_sign_in: ^6.2.1
   page_view_dot_indicator: ^2.3.0
   cloud_firestore: ^4.15.8
+  firebase_analytics:
+  firebase_storage:
+  before_after_image_slider_nullsafty: ^1.0.1
+  image_cropper: ^5.0.1
+  image: ^3.0.1
+  photofilters:
+  image_gallery_saver: ^2.0.3
+  fluttertoast: ^8.2.4
+
+
+
 
 dev_dependencies:
   flutter_test:

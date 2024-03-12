@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'onnbord.dart';
-
+// void main(){
+//   runApp(MaterialApp
+//     (
+//       debugShowCheckedModeBanner: false,home: SplashScreen()));
+// }
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -15,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToMainScreen() async {
-    await Future.delayed(Duration(seconds: 5)); // Display splash screen for 5 seconds
+    await Future.delayed(Duration(seconds: 5),
+    );
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => OnboardingScreen()),
@@ -30,31 +35,24 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 50.0,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 45.0,
-                backgroundImage: AssetImage('assets/images/img.png'), // Replace with your avatar image
-              ),
-            ),
+            Image(image: AssetImage('assets/images/img_12.png'),),
             SizedBox(height: 20.0),
             Text(
               'Photo Me',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 10.0),
-            Text(
-              'Loading...',
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-              ),
-            ),
+            // SizedBox(height: 10.0),
+            // Text(
+            //   'Loading...',
+            //   style: TextStyle(
+            //     fontSize: 18.0,
+            //     color: Colors.white,
+            //   ),
+            // ),
           ],
         ),
       ),
