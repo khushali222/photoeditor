@@ -34,6 +34,27 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   String image_url = "";
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // userLogin() async {
+  //   try {
+  //     await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: email, password: password);
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => MyHomePage()));
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user not found') {
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //           backgroundColor: Colors.orangeAccent,
+  //           content: Text(" no user found for that email")));
+  //     } else if (e.code == 'wrong password') {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           backgroundColor: Colors.orangeAccent,
+  //           content: Text("wrong password provided by user"),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
   userLogin() async {
     try {
       await FirebaseAuth.instance
@@ -41,20 +62,21 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MyHomePage()));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user not found') {
+      if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.orangeAccent,
-            content: Text(" no user found for that email")));
-      } else if (e.code == 'wrong password') {
+            content: Text("No user found for that email")));
+      } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.orangeAccent,
-            content: Text("wrong password provided by user"),
+            content: Text("Wrong password provided by user"),
           ),
         );
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
