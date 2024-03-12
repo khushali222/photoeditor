@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/login.dart';
 import 'package:projects/screen/onbording.dart';
@@ -38,6 +40,52 @@ class _signupState extends State<signup> {
   String email = "", password = "", name = "";
   String image_url = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  void _signUp() async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      print('User signed up: ${userCredential.user?.email}');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OnBorading()),
+      );
+    } catch (e) {
+      print('Error during signup: $e');
+
+    }
+  }
+  // void _signUp() async {
+  //   try {
+  //     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+  //       email: emailController.text,
+  //       password: passwordController.text,
+  //     );
+  //
+  //     // Store additional user data in Firestore
+  //     await _firestore.collection('users').doc(userCredential.user!.uid).set({
+  //       'name': nameController.text,
+  //       'email': emailController.text,
+  //       // Add other fields as needed
+  //     });
+  //
+  //     // You can do additional processing after successful signup here
+  //     // For example, you might want to update user information or navigate to a different screen.
+  //
+  //     print('User signed up: ${userCredential.user?.email}');
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => OnBorading()),
+  //     );
+  //   } catch (e) {
+  //     print('Error during signup: $e');
+  //     // Handle signup errors here
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     nameController.text = widget.name;
@@ -202,6 +250,35 @@ class _signupState extends State<signup> {
                     ],
                   ),
                 ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 20, right: 20),
+                //   child: Builder(
+                //     builder: (BuildContext builderContext) {
+                //       return Container(
+                //         padding: const EdgeInsets.only(top: 3, left: 3),
+                //         child: ElevatedButton(
+                //           onPressed: () {
+                //             if (_formKey.currentState!.validate()) {
+                //               Navigator.push(
+                //                 builderContext,
+                //                 MaterialPageRoute(builder: (context) => OnBorading()),
+                //               );
+                //             }
+                //           },
+                //           child: const Text(
+                //             "Sign up",
+                //             style: TextStyle(fontSize: 15, color: Colors.white),
+                //           ),
+                //           style: ElevatedButton.styleFrom(
+                //             shape: const StadiumBorder(),
+                //             padding: const EdgeInsets.symmetric(vertical: 10),
+                //             backgroundColor: Colors.purple,
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Builder(
@@ -211,10 +288,7 @@ class _signupState extends State<signup> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                builderContext,
-                                MaterialPageRoute(builder: (context) => OnBorading()),
-                              );
+                              _signUp();
                             }
                           },
                           child: const Text(

@@ -128,17 +128,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   List<Widget> _onboardingPages = [
-    OnboardingPage(
-      title: 'Welcome to PhotoMe',
-      description: 'Easy & Beautiful photo edit with us',
-      imagePath: 'assets/images/img.png',
-    ),
-   // Splash2(),
-    OnboardingPage(
-      title: 'Explore Features',
-      description: 'Discover the amazing features of our app.',
-      imagePath: 'assets/images/img_2.png',
-    ),
+    // OnboardingPage(
+    //   title: 'Welcome to PhotoMe',
+    //   description: 'Easy & Beautiful photo edit with us',
+    //   imagePath: 'assets/images/img.png',
+    // ),
+    Splash2(),
+    // OnboardingPage(
+    //   title: 'Explore Features',
+    //   description: 'Discover the amazing features of our app.',
+    //   imagePath: 'assets/images/img_2.png',
+    // ),
     OnBorading(),
   ];
 

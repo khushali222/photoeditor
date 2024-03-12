@@ -75,8 +75,7 @@ class _EnhanceState extends State<Enhance> {
         //     SizedBox(width: 15,),
         //   ],
         // ),
-          body:
-          Container(
+          body:          Container(
             child: Column(
               children: [
                SizedBox(height: 10,),
