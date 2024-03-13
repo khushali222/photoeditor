@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/login.dart';
+import 'package:projects/wrap.dart';
 
 import 'enhance.dart';
 
@@ -105,7 +106,7 @@ class _OnBoradingState extends State<OnBorading> {
                   ),
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Enhance()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                     },
                     child: Material(
                       elevation: 5.0,

@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projects/homepage.dart';
 import 'package:projects/login.dart';
+import 'package:projects/screen/enhance.dart';
 import 'package:projects/screen/onbording.dart';
 import 'package:projects/wrap.dart';
 
@@ -34,7 +36,6 @@ class signup extends StatefulWidget {
 
 class _signupState extends State<signup> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -56,7 +57,7 @@ class _signupState extends State<signup> {
       print('User signed up: ${userCredential.user?.email}');
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Wraper()),
+        MaterialPageRoute(builder: (context) => Enhance()),
       );
     } catch (e) {
       print('Error during signup: $e');
@@ -66,11 +67,9 @@ class _signupState extends State<signup> {
 
   @override
   Widget build(BuildContext context) {
-    nameController.text = widget.name;
-    emailController.text = widget.email;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:
+    // nameController.text = widget.name;
+    // emailController.text = widget.email;
+    return
       Scaffold(
         body:
         SingleChildScrollView(
@@ -305,7 +304,7 @@ class _signupState extends State<signup> {
           ),
         ),
 
-      ),
+
     );
   }
 }

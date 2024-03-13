@@ -41,8 +41,8 @@ class _MyAppState extends State<MyApp> {
 
     // home: MyHomePage(),
    //  home: DashboardScreen(),
-      home: Wraper(),
-      //home: SplashScreen(),
+    //  home: Wraper(),
+      home: SplashScreen(),
     );
   }
 }

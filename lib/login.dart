@@ -2,7 +2,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:projects/screen/enhance.dart';
 import 'package:projects/signup.dart';
 
 import 'dashbord.dart';
@@ -25,8 +27,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+ // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+ // final _formKey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -38,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          context, MaterialPageRoute(builder: (context) => Enhance()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -54,12 +57,9 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         body:
         SingleChildScrollView(
           child: Container(
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 // ),
                 SizedBox(height: 20,),
                 Form(
-                  key: _formKey,
+                  key: _formkey,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
                     child: Column(
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.only(top: 3,),
                             child: ElevatedButton(
                               onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
+                                if (_formkey.currentState!.validate()) {
                                   setState(() {
                                     email = emailController.text;
                                     password = passwordController.text;
@@ -262,8 +262,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    
   }
 
   // signInWithGoogle() async {
