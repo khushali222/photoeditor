@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../gridview.dart';
-void main(){
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Enhance()));
-}
+import '../setting.dart';
+// void main(){
+//   runApp(MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Enhance()));
+// }
 
 class Enhance extends StatefulWidget {
   const Enhance({super.key});
@@ -159,8 +160,13 @@ class _EnhanceState extends State<Enhance> {
                         // Image(image: NetworkImage('https://cdn-icons-png.flaticon.com/128/3239/3239952.png',),
                         //   height: 20,width: 20,),
                         SizedBox(width: 10,),
-                        Image(image: NetworkImage('https://cdn-icons-png.flaticon.com/128/2040/2040504.png',),
-                          height: 20,width: 20,),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
+                          },
+                          child: Image(image: NetworkImage('https://cdn-icons-png.flaticon.com/128/2040/2040504.png',),
+                            height: 20,width: 20,),
+                        ),
                         SizedBox(width: 10,),
                         Stack(
                             children:

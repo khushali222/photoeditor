@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/login.dart';
 import 'package:projects/screen/onbording.dart';
+import 'package:projects/wrap.dart';
 
 // void main() {
 //   runApp(
@@ -48,44 +49,21 @@ class _signupState extends State<signup> {
         email: emailController.text,
         password: passwordController.text,
       );
-
+      await _firestore.collection('login').doc(userCredential.user!.uid).set({
+        'name': nameController.text,
+        'email': emailController.text,
+      });
       print('User signed up: ${userCredential.user?.email}');
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OnBorading()),
+        MaterialPageRoute(builder: (context) => Wraper()),
       );
     } catch (e) {
       print('Error during signup: $e');
 
     }
   }
-  // void _signUp() async {
-  //   try {
-  //     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-  //       email: emailController.text,
-  //       password: passwordController.text,
-  //     );
-  //
-  //     // Store additional user data in Firestore
-  //     await _firestore.collection('users').doc(userCredential.user!.uid).set({
-  //       'name': nameController.text,
-  //       'email': emailController.text,
-  //       // Add other fields as needed
-  //     });
-  //
-  //     // You can do additional processing after successful signup here
-  //     // For example, you might want to update user information or navigate to a different screen.
-  //
-  //     print('User signed up: ${userCredential.user?.email}');
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => OnBorading()),
-  //     );
-  //   } catch (e) {
-  //     print('Error during signup: $e');
-  //     // Handle signup errors here
-  //   }
-  // }
+
   @override
   Widget build(BuildContext context) {
     nameController.text = widget.name;

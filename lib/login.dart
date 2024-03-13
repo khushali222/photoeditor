@@ -33,28 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   String email = "";
   String password = "";
   String image_url = "";
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  // userLogin() async {
-  //   try {
-  //     await FirebaseAuth.instance
-  //         .signInWithEmailAndPassword(email: email, password: password);
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => MyHomePage()));
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user not found') {
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //           backgroundColor: Colors.orangeAccent,
-  //           content: Text(" no user found for that email")));
-  //     } else if (e.code == 'wrong password') {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           backgroundColor: Colors.orangeAccent,
-  //           content: Text("wrong password provided by user"),
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
   userLogin() async {
     try {
       await FirebaseAuth.instance

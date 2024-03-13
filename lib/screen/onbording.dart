@@ -105,7 +105,7 @@ class _OnBoradingState extends State<OnBorading> {
                   ),
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Enhance()));
                     },
                     child: Material(
                       elevation: 5.0,

@@ -5,6 +5,7 @@ import 'package:projects/profile_page.dart';
 import 'package:projects/screen/dashboard.dart';
 import 'package:projects/screen/onbording.dart';
 import 'package:projects/splash_screen.dart';
+import 'package:projects/wrap.dart';
 
 import 'background.dart';
 import 'dashbord.dart';
@@ -25,9 +26,14 @@ void main() async{
   //runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,8 +41,8 @@ class MyApp extends StatelessWidget {
 
     // home: MyHomePage(),
    //  home: DashboardScreen(),
-     // home: LoginPage(),
-      home: SplashScreen(),
+      home: Wraper(),
+      //home: SplashScreen(),
     );
   }
 }
