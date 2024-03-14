@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Filters extends StatefulWidget {
-  const Filters({super.key});
+  const Filters({super.key, required File imageFile});
 
   @override
   State<Filters> createState() => _FiltersState();

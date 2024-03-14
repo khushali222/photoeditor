@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _screens = [
     Enhance(),
     Ai(),
-    Filters(),
+    //Filters(),
 
   ];
   void _onItemTapped(int index) {
