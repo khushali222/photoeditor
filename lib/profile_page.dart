@@ -218,9 +218,9 @@
 // }
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
+void main() {
+  runApp(Profile());
+}
 
 class Profile extends StatefulWidget {
   @override
@@ -230,17 +230,11 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   // This widget is the root of your application.
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
-
   TextEditingController confirmpasswordController = TextEditingController();
-
   TextEditingController nameController = TextEditingController();
-
   TextEditingController creditController = TextEditingController();
-
   String email = "", password = "", name = "";
-
   String image_url = "";
 
   @override
@@ -306,7 +300,8 @@ class _ProfileState extends State<Profile> {
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 10,
-                        right: 10), // Adjust the value to make it smaller
+                        right: 10
+                    ),
                     child: Container(
                       padding:
                           const EdgeInsets.only(top: 6, left: 10, right: 10),
