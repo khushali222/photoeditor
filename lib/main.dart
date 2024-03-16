@@ -6,6 +6,7 @@ import 'package:projects/screen/dashboard.dart';
 import 'package:projects/screen/onbording.dart';
 import 'package:projects/splash_screen.dart';
 import 'package:projects/wrap.dart';
+import 'package:provider/provider.dart';
 
 import 'background.dart';
 import 'dashbord.dart';
@@ -36,13 +37,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context)=>ImageProviderPicker()),
+
+    ],
+    child:  MaterialApp(
       debugShowCheckedModeBanner: false,
 
     // home: MyHomePage(),
    //  home: DashboardScreen(),
     //  home: Wraper(),
       home: SplashScreen(),
+    )
     );
   }
 }

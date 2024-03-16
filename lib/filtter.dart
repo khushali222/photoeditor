@@ -183,6 +183,7 @@
 //     );
 //   }
 // }
+import 'dart:convert';
 import 'dart:io';
 import 'package:image/image.dart' as img;
 
@@ -386,23 +387,7 @@ import 'image_helper.dart';
 //   }
 // }
 import 'dart:io';
-
-import 'package:image/image.dart' as img;
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:photofilters/photofilters.dart';
-import 'package:photofilters/widgets/photo_filter.dart';
-
-
-
+import 'package:http/http.dart'as http;
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -481,7 +466,48 @@ class _FilterScreenState extends State<FilterScreen> {
     }
 
   }
+  String? imageUrl;
+  bool isProcessing = false;
+  String? errorMessage;
+  String? newimageUrl;
 
+  Future<void> removeBackground() async {
+    final apiUrl = 'https://bgremove.dohost.in/remove-bg';
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "image_url": imageUrl,
+        }),
+      );
+
+      print(response.body);
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final imageData = responseData['image_url'];
+        print(imageData);
+        setState(() {
+          newimageUrl = imageData;
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to remove background: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Failed to remove background: $e';
+      });
+    } finally {
+      setState(() {
+        isProcessing = false;
+      });
+    }
+  }
   /*Future<void> _applyFilters(BuildContext context) async {
     if (widget.imageFile != null) {
       File? filteredImage = await Navigator.push(
@@ -670,43 +696,77 @@ class _FilterScreenState extends State<FilterScreen> {
                     ),
                   ),
                   SizedBox(width: 15,),
-                  Center(
-                    child: Column(
-                      children: [
-                        Material(
-                          elevation: 3,
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: IconButton(
-                              onPressed: (){
-                                Navigator.push(context,MaterialPageRoute(builder: (context)=>SecondHome()));
+                  // Center(
+                  //   child: Column(
+                  //     children: [
+                  //       Material(
+                  //         elevation: 3,
+                  //         borderRadius: BorderRadius.circular(10),
+                  //         child: Container(
+                  //           height: 50,
+                  //           width: 50,
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.black,
+                  //             borderRadius: BorderRadius.circular(10),
+                  //           ),
+                  //           child: IconButton(
+                  //             onPressed: (){
+                  //               Navigator.push(context,MaterialPageRoute(builder: (context)=>SecondHome()));
+                  //
+                  //             },
+                  //
+                  //             /*onPressed: () async {
+                  //             if (widget.imageFile != null) {
+                  //               var withoutBackground = await ImageHelper.removeBackground(widget.imageFile);
+                  //               if (withoutBackground is File) {
+                  //                 setState(() {
+                  //                   widget.imageFile = withoutBackground;
+                  //                 });
+                  //               }
+                  //             }
+                  //           },*/
+                  //             icon: Icon(Icons.backpack_outlined, color: Colors.white),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Text("Background", style: TextStyle(color: Colors.black, fontSize: 13,fontWeight: FontWeight.bold)),
+                  //     ],
+                  //   ),
+                  // ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Display the selected image
+              Image.file(widget.imageFile),
+              SizedBox(height: 20),
+              // Button to trigger background removal
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isProcessing = true;
+                    imageUrl = widget.imageFile.path;
+                  });
+                  removeBackground();
+                },
+                child: isProcessing
+                    ? CircularProgressIndicator()
+                    : Text("Remove Background"),
+              ),
+              SizedBox(height: 20),
+              // Display the processed image if available
+              if (newimageUrl != null)
+                Image.network(newimageUrl!),
+              // Display error message if any
+              if (errorMessage != null)
+                Text(
+                  errorMessage!,
+                  style: TextStyle(color: Colors.red),
+                ),
+            ],
+          ),
+        ),
 
-                              },
-
-                              /*onPressed: () async {
-                              if (widget.imageFile != null) {
-                                var withoutBackground = await ImageHelper.removeBackground(widget.imageFile);
-                                if (withoutBackground is File) {
-                                  setState(() {
-                                    widget.imageFile = withoutBackground;
-                                  });
-                                }
-                              }
-                            },*/
-                              icon: Icon(Icons.backpack_outlined, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Text("Background", style: TextStyle(color: Colors.black, fontSize: 13,fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
                   SizedBox(width: 10,),
                 ],
               ),

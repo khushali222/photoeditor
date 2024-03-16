@@ -3138,14 +3138,18 @@
 //   }
 // }
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../background_remove.dart';
 import '../filtter.dart';
 import '../gridview.dart';
+import '../profile_page.dart';
 import '../second_home.dart';
 import '../setting.dart';
 void main(){
@@ -3229,7 +3233,16 @@ class _EnhanceState extends State<Enhance> {
       },
     );
   }*/
+  File? _image;
+  Future getImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
   Future<void> fetchImages() async {
     // Fetch products from Firestore
     QuerySnapshot querySnapshot =
@@ -3275,6 +3288,7 @@ class _EnhanceState extends State<Enhance> {
   }
   @override
   Widget build(BuildContext context) {
+    Uint8List? _image = context.watch<ImageProviderPicker>().image;
     return
       SafeArea(
         child:
@@ -3338,9 +3352,29 @@ class _EnhanceState extends State<Enhance> {
                     SizedBox(
                       width: 20,
                     ),
-                    CircleAvatar(
-                        radius:25,
-                        backgroundImage:AssetImage("assets/images/ai1.png")
+                    // CircleAvatar(
+                    //     radius:25,
+                    //     backgroundImage:AssetImage("assets/images/ai1.png")
+                    // ),
+          //  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                      },
+                      child: Stack(
+                          children: [
+                            _image != null
+                                ? CircleAvatar(
+                              radius: 25,
+                              backgroundImage: MemoryImage(_image!),
+                            ) :
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  'https://cdn.pixabay.com/photo/2024/03/06/18/46/ai-generated-8616945_640.jpg'),
+                              radius: 20,
+                            ),
+                          ]
+                      ),
                     ),
                     SizedBox(
                       width: 18,
@@ -3949,6 +3983,9 @@ class _EnhanceState extends State<Enhance> {
                                     //
                                     //   });
                                     // },
+                                    onTap: (){
+                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Background_remove()));
+                                    },
                                     child:
                                     Material(
                                       elevation: 3.0,
