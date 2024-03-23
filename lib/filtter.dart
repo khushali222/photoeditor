@@ -718,6 +718,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                   child: InkWell(
                       onTap: (){
+
                         _saveImageToGallery();
                       },
                       child: Icon(Icons.download_for_offline,size: 30,color: Colors.white,)),

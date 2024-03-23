@@ -615,7 +615,8 @@ class _Background_removeState extends State<Background_remove> {
   //     });
   //   });
   // }
-  void _startMovingAnimation() {
+  void _startMovingAnimation()
+  {
     const double maxVerticalPosition = 50.0; // Set the maximum vertical position
     _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
       setState(() {
@@ -629,12 +630,9 @@ class _Background_removeState extends State<Background_remove> {
       });
     });
   }
-
-
   void _stopMovingAnimation() {
     _timer.cancel();
   }
-
   Future<void> _pickImageFromGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -646,7 +644,6 @@ class _Background_removeState extends State<Background_remove> {
       }
     });
   }
-
   Future<void> _pickImageFromCamera() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
