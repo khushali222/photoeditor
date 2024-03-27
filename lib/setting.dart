@@ -58,210 +58,157 @@ class _SettingState extends State<Setting> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(50),
             ),
-            child: Column(
-                    children: [
-                      SizedBox(
-                        height: 3,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 10,),
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              //  height: 45,
-                              // width: 45,
-                              // decoration: BoxDecoration(
-                              //   color: Colors.deepPurple[200],
-                              //   borderRadius: BorderRadius.circular(10),
-                             // ),
-                              child: Image.asset('assets/images/img_17.png',height: 30,width: 30,),
-                            ),
-                          ),
-                        //  Icon(Icons.cancel,size: 30,),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 15,),
-                          Text("Settings",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.deepPurple[200],
-                            fontSize: 25
-                          ),),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 5),
-                      child:
-                      Material(
-                        elevation: 4,
-                        borderRadius: BorderRadius.circular(30),
-                        child: Stack(
-                          children:
-                         [
-                           Positioned(
-                             top: 20,
-                             right: 20,
-                             child: Image.asset('assets/images/img_18.png',height: 120,width: 120,),
-                           ),
-                           Container(
-                            height: MediaQuery.of(context).size.height * .28,
-                            width: MediaQuery.of(context).size.width * .99,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(30),
-                              gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.topRight,
-                                        colors: [
-                                          Color.fromRGBO(124, 87, 187, .5),
-                                          Color.fromRGBO(128, 200, 226, 1)
-                                        ],
-                                      ),
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 20,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 25,),
-                                    Text("Photo Me Pro",
-                                      style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20
-                                    ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 30,),
-                                    Text("Unlimited saves",
-                                      style: TextStyle(
-
-
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 12,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 30,),
-                                    Text("Multiple Results",
-                                      style: TextStyle(
-
-
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    GestureDetector(
-                                      onTap: (){
-                                        _logout();
-
-                                      },
-                                      child: Material(
-                                          elevation: 4,
-                                          borderRadius: BorderRadius.circular(35),
-                                          child: Container(
-                                            height: MediaQuery.of(context).size.height * .06,
-                                            width: MediaQuery.of(context).size.width * .5,
-                                            decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                SizedBox(height: 10,),
-                                                Row(
-                                                  children: [
-                                                    SizedBox(width: 55,),
-                                                    Text("Try Pro Now",style: TextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.white
-                                                    ),),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),]
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                      children: [
+                        SizedBox(
+                          height: 5,
                         ),
-                      ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5,right: 5),
-                        child: Material(
-                          elevation: 4,
-                          borderRadius: BorderRadius.circular(25),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * .12,
-                            width: MediaQuery.of(context).size.width * .99,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(25),
+                        Row(
+                          children: [
+                            SizedBox(width: 10,),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                //  height: 45,
+                                // width: 45,
+                                // decoration: BoxDecoration(
+                                //   color: Colors.deepPurple[200],
+                                //   borderRadius: BorderRadius.circular(10),
+                               // ),
+                                child: Image.asset('assets/images/img_17.png',height: 30,width: 30,),
+                              ),
                             ),
-                            child: Column(
-
-                              children: [
-                                SizedBox(height: 30,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Text("Privacy",style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16
-                                    ),),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          //  Icon(Icons.cancel,size: 30,),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 15,),
+                            Text("Settings",style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple[200],
+                              fontSize: 25
+                            ),),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
                         padding: const EdgeInsets.only(left: 5,right: 5),
                         child:
-                        GestureDetector(
-                          onTap: (){
-                            var options = {
-                              'key': 'rzp_test_RsqV5b0NEAwbWT',
-                              'amount': 1 * 100, //in the smallest currency sub-unit.
-                              'name': 'Acme Corp.',
-                              'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
-                              'description': 'Fine T-Shirt',
-                              'timeout': 60, // in seconds
-                            };
-                            _razorpay.open(options);
-                          },
+                        Material(
+                          elevation: 4,
+                          borderRadius: BorderRadius.circular(30),
+                          child: Stack(
+                            children:
+                           [
+                             Positioned(
+                               top: 20,
+                               right: 20,
+                               child: Image.asset('assets/images/img_18.png',height: 120,width: 120,),
+                             ),
+                             Container(
+                              height: MediaQuery.of(context).size.height * .28,
+                              width: MediaQuery.of(context).size.width * .99,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(30),
+                                gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.topRight,
+                                          colors: [
+                                            Color.fromRGBO(124, 87, 187, .5),
+                                            Color.fromRGBO(128, 200, 226, 1)
+                                          ],
+                                        ),
+                              ),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 20,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 25,),
+                                      Text("Photo Me Pro",
+                                        style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20
+                                      ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 30,),
+                                      Text("Unlimited saves",
+                                        style: TextStyle(
+
+
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 12,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 30,),
+                                      Text("Multiple Results",
+                                        style: TextStyle(
+
+
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 20,),
+                                      GestureDetector(
+                                        onTap: (){
+                                          _logout();
+
+                                        },
+                                        child: Material(
+                                            elevation: 4,
+                                            borderRadius: BorderRadius.circular(35),
+                                            child: Container(
+                                              height: MediaQuery.of(context).size.height * .06,
+                                              width: MediaQuery.of(context).size.width * .5,
+                                              decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius: BorderRadius.circular(20),
+                                              ),
+                                              child: Center(
+                                                child: Text("Try Pro Now",style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white
+                                                ),),
+                                              ),
+                                            ),
+                                          ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),]
+                          ),
+                        ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 5),
                           child: Material(
                             elevation: 4,
                             borderRadius: BorderRadius.circular(25),
@@ -278,7 +225,87 @@ class _SettingState extends State<Setting> {
                                   Row(
                                     children: [
                                       SizedBox(width: 20,),
-                                      Text("Payment",style: TextStyle(
+                                      Text("Privacy",style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16
+                                      ),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 5),
+                          child:
+                          GestureDetector(
+                            onTap: (){
+                              var options = {
+                                'key': 'rzp_test_RsqV5b0NEAwbWT',
+                                'amount': 1 * 100, //in the smallest currency sub-unit.
+                                'name': 'Acme Corp.',
+                                'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
+                                'description': 'Fine T-Shirt',
+                                'timeout': 60, // in seconds
+                              };
+                              _razorpay.open(options);
+                            },
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(25),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height * .12,
+                                width: MediaQuery.of(context).size.width * .99,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 30,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 20,),
+                                        Text("Payment",style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16
+                                        ),),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 5),
+                          child:
+                          Material(
+                            borderRadius: BorderRadius.circular(25),
+                            elevation: 4,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * .1,
+                              width: MediaQuery.of(context).size.width * .99,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Column(
+
+                                children: [
+                                  SizedBox(height: 25,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 20,),
+                                      Text("Settings",style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16
                                       ),),
@@ -289,79 +316,36 @@ class _SettingState extends State<Setting> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5,right: 5),
-                        child:
-                        Material(
-                          borderRadius: BorderRadius.circular(25),
-                          elevation: 4,
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * .1,
-                            width: MediaQuery.of(context).size.width * .99,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Column(
+                        GestureDetector(
+                          onTap: (){
+                            _logout();
 
-                              children: [
-                                SizedBox(height: 25,),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Text("Settings",style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16
-                                    ),),
-                                  ],
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child:
+                            Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height * .07,
+                                width: MediaQuery.of(context).size.width * .6,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepPurple[200],
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: (){
-                          _logout();
-
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child:
-                          Material(
-                            elevation: 4,
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * .07,
-                              width: MediaQuery.of(context).size.width * .6,
-                              decoration: BoxDecoration(
-                                color: Colors.deepPurple[200],
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 10,),
-                                  Row(
-                                    children: [
-                                      SizedBox(width: 70,),
-                                      Text("Log Out",style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18
-                                      ),),
-                                    ],
-                                  ),
-                                ],
+                                child: Center(
+                                  child: Text("Log Out",style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18
+                                  ),),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+              ),
             ),
           ),
         )

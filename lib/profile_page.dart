@@ -412,7 +412,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(20.0),
                 child:
                 Material(
-                  elevation: 4,
+                  elevation: 3,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
                     height: MediaQuery.of(context).size.height * .07,
@@ -421,18 +421,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.deepPurple[200],
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        SizedBox(width: 60,),
-                        Center(
-                          child: Text("Save changes",style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18
-                          ),),
-                        ),
-                      ],
+                    child: Center(
+                      child: Text("Save changes",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 18
+                      ),),
                     ),
                   ),
                 ),

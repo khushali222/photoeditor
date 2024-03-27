@@ -567,7 +567,9 @@ import 'package:photofilters/widgets/photo_filter.dart';
 import 'package:projects/second_home.dart';
 
 import 'adjustment_screen.dart';
+import 'background_remove.dart';
 import 'image_helper.dart';
+import 'login.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -585,6 +587,33 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
 
+  late User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthState();
+  }
+
+
+  // Function to check the authentication state
+  void _checkAuthState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        // User is signed in
+        setState(() {
+          _user = user;
+        });
+        //_saveImageToGallery();
+      } else {
+        // User is signed out
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+    });
+  }
   Future<void> _saveImageToGallery() async {
     try {
       final success = await ImageGallerySaver.saveFile(widget.imageFile.path);
@@ -610,7 +639,6 @@ class _FilterScreenState extends State<FilterScreen> {
       if (user == null) {
         throw Exception('User not authenticated');
       }
-
       final DateTime uploadTime = DateTime.now(); // Get current DateTime
       print(uploadTime);
       final firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
@@ -631,10 +659,8 @@ class _FilterScreenState extends State<FilterScreen> {
       print(downloadURL);
       final userId = user.uid;
       print(userId);// Replace 'user_id' with the actual user ID
-
       // Create a subcollection 'images' within the user's document
       final userRef = FirebaseFirestore.instance.collection('users').doc(userId).collection('images');
-
       // Add a new document for the uploaded image with imageURL and uploadTime fields
       await userRef.add({
         'imageURL': downloadURL,
@@ -718,7 +744,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                   child: InkWell(
                       onTap: (){
-
+                        _checkAuthState();
                         _saveImageToGallery();
                       },
                       child: Icon(Icons.download_for_offline,size: 30,color: Colors.white,)),
@@ -852,7 +878,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             ),
                             child: IconButton(
                               onPressed: (){
-                                Navigator.push(context,MaterialPageRoute(builder: (context)=>SecondHome()));
+                                Navigator.push(context,MaterialPageRoute(builder: (context)=>Background_remove()));
 
                               },
 
