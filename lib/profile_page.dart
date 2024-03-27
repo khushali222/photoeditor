@@ -13,7 +13,13 @@ void main() async {
   await Firebase.initializeApp();
   runApp(ProfileScreen());
 }
-
+// class UserProfile {
+//   final String name;
+//   final String email;
+//   final String credit;
+//
+//   UserProfile({required this.name, required this.email, required this.credit});
+// }
 class ImageProviderPicker extends ChangeNotifier {
   Uint8List? _image;
 
@@ -57,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          //  backgroundColor: Colors.deepPurple[200],
+           backgroundColor: Colors.deepPurple[200],
           centerTitle: true,
           title: Text(
             "Profile",
@@ -136,7 +142,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ]),
             ),
             Center(
-              child: Text(
+              child:
+              Text(
                 "Khushali Sarvaiya",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -265,6 +272,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Row(
+                      children: [
+                        SizedBox(width:20),
+                        Text(
+                          "Your name",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
                     Padding(
                       padding: const EdgeInsets.only(left: 6, right: 6),
                       child: TextFormField(
@@ -290,6 +310,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 15,
                     ),
+                    Row(
+                      children: [
+                        SizedBox(width:20),
+                        Text(
+                          "E-mail",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
                     Padding(
                       padding: const EdgeInsets.only(left: 6, right: 6),
                       child: TextFormField(
@@ -302,7 +335,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.person),
+                          prefixIcon: const Icon(Icons.email),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -319,6 +352,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 15,
                     ),
+                    Row(
+                      children: [
+                        SizedBox(width:20),
+                        Text(
+                          "Your Credit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
                     Padding(
                       padding: const EdgeInsets.only(left: 6, right: 6),
                       child: TextFormField(
@@ -332,7 +378,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           fillColor: Colors.purple.withOpacity(0.1),
                           filled: true,
-                          prefixIcon: const Icon(Icons.person),
+                          prefixIcon: const Icon(Icons.credit_card),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

@@ -3158,6 +3158,7 @@ import '../setting.dart';
 //       home: Enhance()));
 // }
 
+
 class Enhance extends StatefulWidget {
   const Enhance({super.key});
 
@@ -3532,8 +3533,6 @@ class _EnhanceState extends State<Enhance> {
                             ),),
                           ],
                         ),
-
-
                         // Padding(
                         //   padding: const EdgeInsets.only(left: 13, right: 13),
                         //   child: SizedBox(

@@ -42,7 +42,8 @@ class _OnBoradingState extends State<OnBorading> {
               SizedBox(
                 height: 70,
               ),
-              Stack(children: [
+              Stack(
+                  children: [
                 Row(
                   children: [
                     // SizedBox(width: 20,),
@@ -106,7 +107,7 @@ class _OnBoradingState extends State<OnBorading> {
                   ),
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Enhance()));
                     },
                     child: Material(
                       elevation: 5.0,

@@ -154,7 +154,7 @@ class _SettingState extends State<Setting> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10,),
+                                SizedBox(height: 12,),
                                 Row(
                                   children: [
                                     SizedBox(width: 30,),
@@ -166,17 +166,16 @@ class _SettingState extends State<Setting> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 10,),
                                 Row(
                                   children: [
+                                    SizedBox(width: 20,),
                                     GestureDetector(
                                       onTap: (){
                                         _logout();
 
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child:
-                                        Material(
+                                      child: Material(
                                           elevation: 4,
                                           borderRadius: BorderRadius.circular(35),
                                           child: Container(
@@ -194,8 +193,7 @@ class _SettingState extends State<Setting> {
                                                     SizedBox(width: 55,),
                                                     Text("Try Pro Now",style: TextStyle(
                                                         fontWeight: FontWeight.bold,
-
-                                                      color: Colors.white
+                                                        color: Colors.white
                                                     ),),
                                                   ],
                                                 ),
@@ -203,7 +201,7 @@ class _SettingState extends State<Setting> {
                                             ),
                                           ),
                                         ),
-                                      ),
+
                                     ),
                                   ],
                                 ),
@@ -211,9 +209,8 @@ class _SettingState extends State<Setting> {
                             ),
                           ),]
                         ),
-
                       ),
-                                              ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
