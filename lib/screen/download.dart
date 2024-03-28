@@ -15,11 +15,16 @@ class _DownloadState extends State<Download> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Download Page'),
+        backgroundColor: Colors.deepPurple[200],
+        centerTitle: true,
+        title: Text('Download Page',style: TextStyle(
+
+
+        ),),
       ),
       body:
       Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13),
+        padding: const EdgeInsets.only(left: 13, right: 13,top: 13),
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('users')

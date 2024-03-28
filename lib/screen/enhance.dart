@@ -3414,7 +3414,7 @@ class _EnhanceState extends State<Enhance> {
           child: Column(
             children: [
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Row(
                 children: [
@@ -3442,7 +3442,7 @@ class _EnhanceState extends State<Enhance> {
                           : CircleAvatar(
                               backgroundImage: NetworkImage(
                                   'https://cdn.pixabay.com/photo/2024/03/06/18/46/ai-generated-8616945_640.jpg'),
-                              radius: 20,
+                              radius: 24,
                             ),
                     ]),
                   ),
@@ -3497,6 +3497,7 @@ class _EnhanceState extends State<Enhance> {
                       ),
                       Stack(children: [
                         Material(
+                          elevation: 4,
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             height: 30,
@@ -4351,7 +4352,8 @@ class _EnhanceState extends State<Enhance> {
                                   //
                                   //   });
                                   // },
-                                  child: Material(
+                                  child:
+                                  Material(
                                     elevation: 3.0,
                                     borderRadius: BorderRadius.circular(10),
                                     // color: all? Colors.deepPurple[200] : Colors.white,
@@ -4675,7 +4677,8 @@ class _EnhanceState extends State<Enhance> {
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              return Dialog(
+                                              return
+                                                Dialog(
                                                 child: Stack(
                                                   children: [
                                                     Positioned(
@@ -4782,93 +4785,93 @@ class _EnhanceState extends State<Enhance> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "April , 2019",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 90,
-                                width: 80,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/ai1.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 90,
-                                width: 80,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/ai2.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 90,
-                                width: 80,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/ai3.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Stack(children: [
-                                Container(
-                                  height: 90,
-                                  width: 80,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      'assets/images/ai4.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ]),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 20,
+                      //     ),
+                      //     Text(
+                      //       "April , 2019",
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         fontSize: 17,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // SingleChildScrollView(
+                      //   scrollDirection: Axis.horizontal,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(left: 20, right: 20),
+                      //     child: Row(
+                      //       children: [
+                      //         Container(
+                      //           height: 90,
+                      //           width: 80,
+                      //           child: ClipRRect(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //             child: Image.asset(
+                      //               'assets/images/ai1.png',
+                      //               fit: BoxFit.cover,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         SizedBox(
+                      //           width: 10,
+                      //         ),
+                      //         Container(
+                      //           height: 90,
+                      //           width: 80,
+                      //           child: ClipRRect(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //             child: Image.asset(
+                      //               'assets/images/ai2.png',
+                      //               fit: BoxFit.cover,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         SizedBox(
+                      //           width: 10,
+                      //         ),
+                      //         Container(
+                      //           height: 90,
+                      //           width: 80,
+                      //           child: ClipRRect(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //             child: Image.asset(
+                      //               'assets/images/ai3.png',
+                      //               fit: BoxFit.cover,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         SizedBox(
+                      //           width: 10,
+                      //         ),
+                      //         Stack(children: [
+                      //           Container(
+                      //             height: 90,
+                      //             width: 80,
+                      //             child: ClipRRect(
+                      //               borderRadius: BorderRadius.circular(10),
+                      //               child: Image.asset(
+                      //                 'assets/images/ai4.png',
+                      //                 fit: BoxFit.cover,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ]),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
               ),
-              // Continue with the rest of your content...
+
             ],
           ),
         ),

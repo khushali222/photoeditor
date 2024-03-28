@@ -17,14 +17,14 @@ import 'onnbord.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
-  runApp(DevicePreview(
-    enabled: true,
-    tools: [
-      ...DevicePreview.defaultTools,
-    ],
-    builder: (context) => MyApp(),
-  ),);
-  //runApp( MyApp());
+  // runApp(DevicePreview(
+  //   enabled: true,
+  //   tools: [
+  //     ...DevicePreview.defaultTools,
+  //   ],
+  //   builder: (context) => MyApp(),
+  // ),);
+  runApp( MyApp());
 }
 
 class MyApp extends StatefulWidget {
