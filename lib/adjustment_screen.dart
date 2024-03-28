@@ -93,12 +93,17 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
                     if (_selectedFilter != null)
                       ColorFiltered(
                         colorFilter: _selectedFilter!,
-                        child: Container(
-                          width: 200, // Specify the width
-                          height: 200, // Specify the height
-                          child: Image.file(
-                            widget.orignalimageFile,
-                            fit: BoxFit.cover, // Adjust the image fit
+                        child:
+                        Center(
+                          child: ClipRect(
+                            child: AspectRatio(
+                              aspectRatio: 1.0, // Adjust the aspect ratio as needed0
+                              child: Container(
+                                color: Colors.yellow,
+                                width: MediaQuery.of(context).size.width * 0.70,
+                                child: Image.file(widget.orignalimageFile, fit: BoxFit.cover),
+                              ),
+                            ),
                           ),
                         ),
                       )

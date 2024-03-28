@@ -53,12 +53,11 @@ class _DownloadState extends State<Download> {
 
                   return GestureDetector(
                     onTap: () {
-                      // Handle image tap action
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          // Your image preview dialog code here
-                          return Dialog(
+                          return
+                            Dialog(
                             child: Stack(
                               children: [
                                 Padding(
@@ -79,27 +78,7 @@ class _DownloadState extends State<Download> {
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  top: 10,
-                                  right: 10,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(width: 10),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          child: Image.asset(
-                                            'assets/images/img_17.png',
-                                            height: 30,
-                                            width: 30,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+
                               ],
                             ),
                           );
