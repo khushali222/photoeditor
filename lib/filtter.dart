@@ -663,7 +663,7 @@ class _FilterScreenState extends State<FilterScreen> {
       final userRef = FirebaseFirestore.instance.collection('users').doc(userId).collection('images');
       // Add a new document for the uploaded image with imageURL and uploadTime fields
       await userRef.add({
-        'imageURL': downloadURL,
+        'imageUrl': downloadURL,
         'uploadTime': uploadTime.toIso8601String(), // Store upload time as ISO 8601 string
       });
     } catch (e) {
