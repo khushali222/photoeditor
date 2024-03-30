@@ -551,6 +551,7 @@
 // }
 import 'dart:io';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image/image.dart' as img;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -614,22 +615,93 @@ class _FilterScreenState extends State<FilterScreen> {
       }
     });
   }
+  // Future<void> _saveImageToGallery() async {
+  //   try {
+  //     final success = await ImageGallerySaver.saveFile(widget.imageFile.path);
+  //     print(success);
+  //     if (success) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Image saved to gallery')),
+  //       );
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Failed to save image')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(' Image saved ')),
+  //     );
+  //   }
+  //
+  //   try {
+  //     final user = FirebaseAuth.instance.currentUser;
+  //     print(user);
+  //     if (user == null) {
+  //       throw Exception('User not authenticated');
+  //     }
+  //     final DateTime uploadTime = DateTime.now(); // Get current DateTime
+  //     print(uploadTime);
+  //     final firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+  //         .ref()
+  //         .child('images')
+  //         .child('image_${uploadTime.microsecondsSinceEpoch}.jpg'); // Use microseconds for unique filenames
+  //     print(ref.getDownloadURL());
+  //     final metadata = firebase_storage.SettableMetadata(
+  //         contentType: 'image/jpeg',
+  //         customMetadata: {'picked-file-path': widget.imageFile.path});
+  //
+  //     final UploadTask uploadTask = ref.putFile(
+  //       widget.imageFile,
+  //       metadata,
+  //     );
+  //     await uploadTask.whenComplete(() => print('Image uploaded to Firebase'));
+  //     final String downloadURL = await ref.getDownloadURL();
+  //     print(downloadURL);
+  //     final userId = user.uid;
+  //     print(userId);// Replace 'user_id' with the actual user ID
+  //     // Create a subcollection 'images' within the user's document
+  //     final userRef = FirebaseFirestore.instance.collection('users').doc(userId).collection('images');
+  //     // Add a new document for the uploaded image with imageURL and uploadTime fields
+  //     await userRef.add({
+  //       'imageUrl': downloadURL,
+  //       'uploadTime': uploadTime.toIso8601String(), // Store upload time as ISO 8601 string
+  //     });
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Failed to upload image: $e')),
+  //     );
+  //   }
+  //
+  // }
   Future<void> _saveImageToGallery() async {
     try {
       final success = await ImageGallerySaver.saveFile(widget.imageFile.path);
       print(success);
       if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Image saved to gallery')),
+        Fluttertoast.showToast(
+          msg: 'Image saved to gallery',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save image')),
+        Fluttertoast.showToast(
+          msg: 'Failed to save image',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(' Image saved ')),
+      Fluttertoast.showToast(
+        msg: 'Image saved',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
       );
     }
 
@@ -667,11 +739,14 @@ class _FilterScreenState extends State<FilterScreen> {
         'uploadTime': uploadTime.toIso8601String(), // Store upload time as ISO 8601 string
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to upload image: $e')),
+      Fluttertoast.showToast(
+        msg: 'Failed to upload image: $e',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
       );
     }
-
   }
 
   /*Future<void> _applyFilters(BuildContext context) async {
@@ -707,68 +782,153 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     return
       Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.deepPurple[200],
-          title: Text("Edit Photo",style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          leading: Row(
-            children: [
-              SizedBox(width: 15,),
-              Container(
-                width: 32,
-                height: 28,
-                decoration: ShapeDecoration(
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Icon(Icons.arrow_back,size: 15,color: Colors.white,),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Row(
-              children: [
-                SizedBox(width: 15,),
-                Container(
-                  width: 38,
-                  height: 38,
-                  decoration: ShapeDecoration(
-                    color: Colors.black,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  ),
-                  child: InkWell(
-                      onTap: (){
-                        _checkAuthState();
-                        _saveImageToGallery();
-                      },
-                      child: Icon(Icons.download_for_offline,size: 30,color: Colors.white,)),
-                ),
-              ],
-            ),
-            SizedBox(width: 20,),
-          ],
-        ),
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   backgroundColor: Colors.deepPurple[200],
+        //   title: Text("Edit Photo",style: TextStyle(fontWeight: FontWeight.bold),
+        //   ),
+        //   leading: Row(
+        //     children: [
+        //       SizedBox(width: 15,),
+        //       Container(
+        //         width: 32,
+        //         height: 28,
+        //         decoration: ShapeDecoration(
+        //           color: Colors.black,
+        //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        //         ),
+        //         child: InkWell(
+        //           onTap: (){
+        //             Navigator.pop(context);
+        //           },
+        //           child: Icon(Icons.arrow_back,size: 15,color: Colors.white,),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        //   actions: [
+        //     Row(
+        //       children: [
+        //         SizedBox(width: 15,),
+        //         Container(
+        //           width: 38,
+        //           height: 38,
+        //           decoration: ShapeDecoration(
+        //             color: Colors.black,
+        //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        //           ),
+        //           child: InkWell(
+        //               onTap: (){
+        //                 _checkAuthState();
+        //                 _saveImageToGallery();
+        //               },
+        //               child: Icon(Icons.download_for_offline,size: 30,color: Colors.white,)),
+        //         ),
+        //       ],
+        //     ),
+        //     SizedBox(width: 20,),
+        //   ],
+        // ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 50,),
-              Center(
-                child: Container(
-                    color: Colors.yellow,
-                    height: MediaQuery.of(context).size.height * 0.50,
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    child: Image.file(widget.imageFile, fit:BoxFit.cover,)),
+              // Center(
+              //   child: Container(
+              //       color: Colors.yellow,
+              //       height: MediaQuery.of(context).size.height * 0.50,
+              //       width: MediaQuery.of(context).size.width * 0.70,
+              //       child: Image.file(widget.imageFile, fit:BoxFit.cover,),
+              //   ),
+              // ),
+              // Center(
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(40),
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(left: 20,right: 20),
+              //       child: ClipRect(
+              //         child: AspectRatio(
+              //           aspectRatio: 1.0,
+              //           child: Container(
+              //            // width: MediaQuery.of(context).size.width * 0.55,
+              //            // height: MediaQuery.of(context).size.height * 0.8,
+              //             // Increase the height here
+              //             width: MediaQuery.of(context).size.width * 0.55,
+              //             height: 600,
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(40),
+              //             ),
+              //               child: Image.file(
+              //               widget.imageFile,
+              //               fit: BoxFit.cover,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+                   Padding(
+                     padding: const EdgeInsets.only(left: 15,right: 15),
+                     child: ClipRRect(
+                       borderRadius: BorderRadius.circular(20),
+                       child: Container(
+                         height: 450,
+                         decoration: BoxDecoration(
+                           //color: Colors.black,
+                           borderRadius: BorderRadius.circular(20),
+                         ),
+                         child: Image.file(widget.imageFile,fit: BoxFit.cover,),
+                       ),
+                     ),
+                   ),
+              SizedBox(height: 15,),
+              Row(
+               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(width: 15,),
+                  GestureDetector(
+                    onTap: (){
+                     Navigator.pop(context);
+                    },
+                    child: Container(
+                      child: Image.asset('assets/images/img_22.png',height: 30,width: 30,),
+                    ),
+                  ) ,
+                  SizedBox(width: 88,),
+                  Text("Edit Photo",style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                   ),
+                  ),
+                  SizedBox(width: 58  ,),
+                  GestureDetector(
+                    onTap: (){
+                      _checkAuthState();
+                      _saveImageToGallery();
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text("Save",style: TextStyle(
+                          color: Colors.white
+                        ),),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15,),
+                ],
               ),
+              SizedBox(height: 33,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+                  // SizedBox(height: MediaQuery.of(context).size.height * 0.25),
                   // SizedBox(width: 40,),
                   SizedBox(width: 20,),
                   Center(
@@ -819,7 +979,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             ),
                             child: IconButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdjustmentScreen(orignalimageFile: widget.imageFile)));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdjustmentScreen(orignalimageFile: widget.imageFile, imageFile: widget.imageFile,)));
                               },
                               icon: Icon(Icons.adjust, color: Colors.white),
                             ),

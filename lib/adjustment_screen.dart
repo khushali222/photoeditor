@@ -474,16 +474,20 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path/path.dart';
 
+import 'filtter.dart';
+
 class AdjustmentScreen extends StatefulWidget {
   final File orignalimageFile;
+  final File imageFile;
 
-  AdjustmentScreen({Key? key, required this.orignalimageFile}) : super(key: key);
+  AdjustmentScreen({Key? key, required this.orignalimageFile, required this.imageFile}) : super(key: key);
 
   @override
   _AdjustmentScreenState createState() => _AdjustmentScreenState();
@@ -557,18 +561,29 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
     });
   }
 
-  @override
+
+  void _navigateToFilterPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FilterScreen(imageFile: widget.imageFile,)), // Replace FilterPage with your filter page widget
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text('Image Adjustments'),
         actions: [
           IconButton(
             onPressed: () {
-              _saveImageToGallery(context);
+            //  _saveImageToGallery(context);
+              _navigateToFilterPage(context);
             },
-            icon: Icon(Icons.download),
+            icon: Icon(Icons.check,color: Colors.black,),
           )
         ],
       ),
@@ -585,37 +600,60 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
                         key: _boundaryKey,
                         child: ColorFiltered(
                           colorFilter: _selectedFilter!,
-                          child: Center(
-                            child: ClipRect(
-                              child: AspectRatio(
-                                aspectRatio: 1.0,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.55, // Specify the width
-                                  height: MediaQuery.of(context).size.height * 0.45, // Specify the height
-                                  child: Image.file(
-                                    widget.orignalimageFile,
-                                    fit: BoxFit.contain, // Adjust the image fit
-                                  ),
+                          child:
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                              margin: EdgeInsets.all(20),
+                                height: 400,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
+                                child: Image.file(widget.orignalimageFile,fit: BoxFit.cover,),
                               ),
                             ),
-                          ),
+                          // Center(
+                          //   child: ClipRect(
+                          //     child: AspectRatio(
+                          //       aspectRatio: 1.0,
+                          //       child: Container(
+                          //         width: MediaQuery.of(context).size.width * 0.55, // Specify the width
+                          //         height: MediaQuery.of(context).size.height * 0.45, // Specify the height
+                          //         child: Image.file(
+                          //           widget.orignalimageFile,
+                          //           fit: BoxFit.contain, // Adjust the image fit
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                       )
                     else
-                      Center(
-                        child: ClipRect(
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.55, // Specify the width
-                              height: MediaQuery.of(context).size.height * 0.45, // Specify the height
-                              child: Image.file(
-                                widget.orignalimageFile,
-                                fit: BoxFit.contain, // Adjust the image fit
-                              ),
-                            ),
+                      // Center(
+                      //   child: ClipRect(
+                      //     child: AspectRatio(
+                      //       aspectRatio: 1,
+                      //       child: Container(
+                      //         width: MediaQuery.of(context).size.width * 0.55, // Specify the width
+                      //         height: MediaQuery.of(context).size.height * 0.45, // Specify the height
+                      //         child: Image.file(
+                      //           widget.orignalimageFile,
+                      //           fit: BoxFit.contain, // Adjust the image fit
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          height: 450,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
                           ),
+                          child: Image.file(widget.orignalimageFile,fit: BoxFit.cover),
                         ),
                       ),
                     SizedBox(height: 20),
@@ -623,7 +661,8 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: iconDataList.map((iconData) {
-                          return _buildIconButton(iconData['icon'], iconData['filterName']);
+                          return _buildIconButton(iconData['icon'],
+                              iconData['filterName']);
                         }).toList(),
                       ),
                     ),
@@ -650,29 +689,75 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
   }
 
 
+  // Widget _buildIconButton(IconData icon, String filterName) {
+  //   final bool isSelected = _selectedFilterName == filterName;
+  //   final buttonColor = isSelected ? Colors.blue : null;
+  //   final textColor = isSelected ? Colors.white : null;
+  //
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 15,right: 15),
+  //     child:
+  //     ElevatedButton.icon(
+  //       onPressed: () {
+  //         _applyFilterByName(filterName);
+  //         setState(() {
+  //           _isIconButtonSelected = true; // Toggle the boolean variable
+  //         });
+  //       },
+  //       style: ElevatedButton.styleFrom(
+  //         primary: buttonColor,
+  //         onPrimary: textColor,
+  //       ),
+  //       icon: Icon(icon),
+  //       label: Text(filterName),
+  //
+  //     ),
+  //   );
+  // }
   Widget _buildIconButton(IconData icon, String filterName) {
     final bool isSelected = _selectedFilterName == filterName;
-    final buttonColor = isSelected ? Colors.blue : null;
+    final buttonColor = isSelected ? Colors.deepPurple[200] : null;
     final textColor = isSelected ? Colors.white : null;
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton.icon(
-        onPressed: () {
-          _applyFilterByName(filterName);
-          setState(() {
-            _isIconButtonSelected = true; // Toggle the boolean variable
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          primary: buttonColor,
-          onPrimary: textColor,
-        ),
-        icon: Icon(icon),
-        label: Text(filterName),
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Column(
+        children: [
+          Material(
+            elevation: 3,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: buttonColor ?? Colors.black,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                onPressed: () {
+                  _applyFilterByName(filterName);
+                  setState(() {
+                    _isIconButtonSelected = true; // Toggle the boolean variable
+                  });
+                },
+                icon: Icon(icon, color: Colors.white,),
+              ),
+            ),
+          ),
+          SizedBox(height: 5),
+          Text(
+            filterName,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
+
 
   void _applyFilterByName(String filterName) {
     setState(() {
@@ -742,7 +827,15 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
         if (image != null) {
           Uint8List? jpegBytes = img.encodeJpg(image, quality: 90) as Uint8List?;
           await ImageGallerySaver.saveImage(jpegBytes!);
+          Fluttertoast.showToast(
+            msg: ' save image to Gallary',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          );
 
+          //firebase
           User? user = FirebaseAuth.instance.currentUser;
           if (user == null) {
             throw Exception('User not authenticated');
@@ -763,15 +856,37 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
             'imageUrl': url,
             'uploadTime': uploadTime.toIso8601String(),
           });
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Image saved to gallery')));
+
+
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to convert image')));
+          Fluttertoast.showToast(
+            msg: 'Failed to convert image',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to save image')));
+        Fluttertoast.showToast(
+          msg: 'Failed to save image',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      Fluttertoast.showToast(
+        msg: 'Error',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+
       print(e);
     }
   }
