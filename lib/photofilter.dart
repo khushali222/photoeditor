@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:photofilters/photofilters.dart';
+// import 'package:photofilters/photofilters.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart';
@@ -28,34 +28,34 @@ class _PhotoFilterState extends State<PhotoFilter> {
   final picker = ImagePicker();
   File? selectedImage; 
 
-  Future<void> getImage(BuildContext context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      selectedImage = File(pickedFile.path);
-      fileName = basename(selectedImage!.path);
-      var image = img.decodeImage(await selectedImage!.readAsBytes());
-      image = img.copyResize(image!, width: 600);
-      var imageFile = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PhotoFilterSelector(
-            title: const Text("Photo Filter Example"),
-            image: image!,
-            filters: presetFiltersList,
-            filename: fileName!,
-            loader: const Center(child: CircularProgressIndicator()),
-            fit: BoxFit.contain,
-          ),
-        ),
-      );
-
-      if (imageFile != null && imageFile.containsKey('image_filtered')) {
-        setState(() {
-          selectedImage = imageFile['image_filtered'];
-        });
-      }
-    }
-  }
+  // Future<void> getImage(BuildContext context) async {
+  //   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     selectedImage = File(pickedFile.path);
+  //     fileName = basename(selectedImage!.path);
+  //     var image = img.decodeImage(await selectedImage!.readAsBytes());
+  //     image = img.copyResize(image!, width: 600);
+  //     var imageFile = await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => PhotoFilterSelector(
+  //           title: const Text("Photo Filter Example"),
+  //           image: image!,
+  //           filters: presetFiltersList,
+  //           filename: fileName!,
+  //           loader: const Center(child: CircularProgressIndicator()),
+  //           fit: BoxFit.contain,
+  //         ),
+  //       ),
+  //     );
+  //
+  //     if (imageFile != null && imageFile.containsKey('image_filtered')) {
+  //       setState(() {
+  //         selectedImage = imageFile['image_filtered'];
+  //       });
+  //     }
+  //   }
+  // }
 
   Future<void> saveImage(BuildContext context) async {
     if (selectedImage != null) {
@@ -132,7 +132,9 @@ class _PhotoFilterState extends State<PhotoFilter> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => getImage(context),
+        onPressed: (){
+          // getImage(context);
+        },
         tooltip: 'Pick Image',
         child: const Icon(Icons.add_a_photo),
       ),

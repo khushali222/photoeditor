@@ -1,3 +1,5 @@
+
+
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,10 @@ import 'package:projects/profile_page.dart';
 import 'package:projects/screen/dashboard.dart';
 import 'package:projects/screen/onbording.dart';
 import 'package:projects/splash_screen.dart';
+import 'package:projects/widgets/provider.dart';
 import 'package:projects/wrap.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
 import 'background.dart';
 import 'dashbord.dart';
 import 'homepage.dart';
@@ -40,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context)=>ImageProviderPicker()),
-
+          ChangeNotifierProvider(create: (context)=>AppImageProvider()),
     ],
     child:  MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -53,5 +56,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+
+
 
 
