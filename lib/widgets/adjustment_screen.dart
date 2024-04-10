@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:projects/widgets/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import 'homescreen.dart';
 class Adjustment_Screen extends StatefulWidget {
@@ -292,8 +293,6 @@ class Adjustment_Screen extends StatefulWidget {
 //   }
 // }
 
-
-
 class _Adjustment_ScreenState extends State<Adjustment_Screen> {
   late AppImageProvider appImageProvider;
   late ColorFilterGenerator adj;
@@ -536,7 +535,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                     children: [
                       Visibility(
                         visible: showauto,
-                        child: slider(
+                        child: SfSlider(
                           value: auto,
                           onChanged: (value) {
                             setState(() {

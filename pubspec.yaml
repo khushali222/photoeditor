@@ -35,7 +35,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  image_editor_plus: ^1.0.5
   image_picker: ^1.0.7
   before_after: ^3.0.0
   http:
@@ -62,6 +61,8 @@ dependencies:
   syncfusion_flutter_sliders: ^25.1.38
   crop_image: ^1.0.12
   colorfilter_generator: ^0.0.8
+  gallery_saver:
+
 
 
 
