@@ -20,6 +20,7 @@ import 'onnbord.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
+  //await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: 'YOUR_RECAPTCHA_SITE_KEY');
   runApp(DevicePreview(
     enabled: true,
     tools: [
@@ -29,6 +30,7 @@ void main() async{
   ),);
  // runApp( MyApp());
 }
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

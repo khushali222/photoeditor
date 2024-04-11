@@ -39,7 +39,6 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
 
   late User? _user;
-
   @override
   void initState() {
     super.initState();
@@ -65,9 +64,6 @@ class _FilterScreenState extends State<FilterScreen> {
       }
     });
   }
-
-
-
 
   Future<void> _saveImageToGallery() async {
     try {

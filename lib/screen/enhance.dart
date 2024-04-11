@@ -363,44 +363,59 @@ class _EnhanceState extends State<Enhance> {
                                                           children: [
                                                             SizedBox(width: 10),
                                                             GestureDetector(
-                                                              onTap: () {
-                                                                // showDialog(
-                                                                //   context: context,
-                                                                //   builder: (BuildContext context) {
-                                                                //     return AlertDialog(
-                                                                //       title: Text("Confirm Delete"),
-                                                                //       content: Text("Are you sure you want to delete this photo?"),
-                                                                //       actions: [
-                                                                //         TextButton(
-                                                                //           onPressed: () {
-                                                                //             Navigator.of(context).pop();
-                                                                //           },
-                                                                //           child: Text("Cancel"),
-                                                                //         ),
-                                                                //         TextButton(
-                                                                //           onPressed: () async {
-                                                                //             // Perform delete operation
-                                                                //             try {
-                                                                //               await FirebaseFirestore.instance
-                                                                //                   .collection('users')
-                                                                //                   .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                                //                   .collection('images')
-                                                                //                   .doc(doc.id) // Use doc.id to get the document ID
-                                                                //                   .delete();
-                                                                //
-                                                                //               Navigator.of(context).pop();
-                                                                //               Navigator.of(context, rootNavigator: true).pop();
-                                                                //             } catch (e) {
-                                                                //               print("Error deleting photo: $e");
-                                                                //             }
-                                                                //           },
-                                                                //           child: Text("Delete"),
-                                                                //         ),
-                                                                //       ],
-                                                                //     );
-                                                                //   },
-                                                                // );
-                                                                Navigator.pop(context);
+                                                              // onTap: () {
+                                                              //   // showDialog(
+                                                              //   //   context: context,
+                                                              //   //   builder: (BuildContext context) {
+                                                              //   //     return AlertDialog(
+                                                              //   //       title: Text("Confirm Delete"),
+                                                              //   //       content: Text("Are you sure you want to delete this photo?"),
+                                                              //   //       actions: [
+                                                              //   //         TextButton(
+                                                              //   //           onPressed: () {
+                                                              //   //             Navigator.of(context).pop();
+                                                              //   //           },
+                                                              //   //           child: Text("Cancel"),
+                                                              //   //         ),
+                                                              //   //         TextButton(
+                                                              //   //           onPressed: () async {
+                                                              //   //             // Perform delete operation
+                                                              //   //             try {
+                                                              //   //               await FirebaseFirestore.instance
+                                                              //   //                   .collection('users')
+                                                              //   //                   .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                                                              //   //                   .collection('images')
+                                                              //   //                   .doc(doc.id) // Use doc.id to get the document ID
+                                                              //   //                   .delete();
+                                                              //   //
+                                                              //   //               Navigator.of(context).pop();
+                                                              //   //               Navigator.of(context, rootNavigator: true).pop();
+                                                              //   //             } catch (e) {
+                                                              //   //               print("Error deleting photo: $e");
+                                                              //   //             }
+                                                              //   //           },
+                                                              //   //           child: Text("Delete"),
+                                                              //   //         ),
+                                                              //   //       ],
+                                                              //   //     );
+                                                              //   //   },
+                                                              //   // );
+                                                              //   Navigator.pop(context);
+                                                              // },
+                                                              onTap: () async {
+                                                                // Perform delete operation
+                                                                try {
+                                                                  await FirebaseFirestore.instance
+                                                                      .collection('users')
+                                                                      .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                                                                      .collection('images')
+                                                                      .doc(doc.id) // Use doc.id to get the document ID
+                                                                      .delete();
+                                                                  Navigator.of(context).pop();
+                                                                  Navigator.of(context, rootNavigator: true).pop();
+                                                                } catch (e) {
+                                                                  print("Error deleting photo: $e");
+                                                                }
                                                               },
                                                               child: Container(
                                                                 child: Image.asset(
@@ -875,14 +890,14 @@ class _EnhanceState extends State<Enhance> {
                       SizedBox(
                         height: 15,
                       ),
-                      //november
+                      //April
                       Row(
                         children: [
                           SizedBox(
                             width: 20,
                           ),
                           Text(
-                            "March , 2024",
+                            "April , 2024",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
@@ -893,7 +908,6 @@ class _EnhanceState extends State<Enhance> {
                       SizedBox(
                         height: 10,
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(left: 13, right: 13),
                         child: SizedBox(
@@ -918,7 +932,7 @@ class _EnhanceState extends State<Enhance> {
                                 final filteredDocs = docs.where((doc) {
                                   final data = doc.data() as Map<String, dynamic>;
                                   final uploadTime = DateTime.parse(data['uploadTime']);
-                                  return uploadTime.month == 3; // March
+                                  return uploadTime.month == 4; // March
                                 }).toList();
 
                                 // If there are no images uploaded by the user for March, display default local images
@@ -1091,6 +1105,213 @@ class _EnhanceState extends State<Enhance> {
                       ),
                       SizedBox(
                         height: 10,
+                      ),
+                      //march
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "March , 2024",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 13, right: 13),
+                        child: SizedBox(
+                          height: 100,
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                                .collection('images')
+                                .orderBy('uploadTime', descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                final List<Widget> imageWidgets = [];
+                                final docs = snapshot.data!.docs;
+
+                                // Filter documents based on the month of March (month number 3)
+                                final filteredDocs = docs.where((doc) {
+                                  final data = doc.data() as Map<String, dynamic>;
+                                  final uploadTime = DateTime.parse(data['uploadTime']);
+                                  return uploadTime.month == 3; // March
+                                }).toList();
+
+                                // If there are no images uploaded by the user for March, display default local images
+                                if (filteredDocs.isEmpty) {
+                                  for (var index = 0; index < products.length; index++) {
+                                    imageWidgets.add(
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 50,
+                                          width: 80,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.asset(
+                                              '${products[index]['image_path']}',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  // Display images uploaded by the user for March
+                                  for (var doc in filteredDocs) {
+                                    final data = doc.data() as Map<String, dynamic>;
+                                    final imageURL = data['imageUrl'] as String?;
+                                    if (imageURL != null) {
+                                      imageWidgets.add(
+                                        GestureDetector(
+                                          onTap: () {
+                                            // Show dialog to view image
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Dialog(
+                                                  child: Stack(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(
+                                                          left: 30,
+                                                          right: 30,
+                                                          top: 60,
+                                                          bottom: 40,
+                                                        ),
+                                                        child: Container(
+                                                          width: MediaQuery.of(context).size.width * 0.7,
+                                                          height: MediaQuery.of(context).size.width * 0.7,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: NetworkImage(imageURL),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        top: 10,
+                                                        right: 10,
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(width: 10),
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                               // Show delete confirmation dialog
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) {
+                                                                    return AlertDialog(
+                                                                      title: Text("Confirm Delete"),
+                                                                      content: Text("Are you sure you want to delete this photo?"),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () async {
+                                                                            // Perform delete operation
+                                                                            try {
+                                                                              await FirebaseFirestore.instance
+                                                                                  .collection('users')
+                                                                                  .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                                                                                  .collection('images')
+                                                                                  .doc(doc.id) // Use doc.id to get the document ID
+                                                                                  .delete();
+                                                                              Navigator.of(context).pop();
+                                                                              Navigator.of(context, rootNavigator: true).pop();
+                                                                            } catch (e) {
+                                                                              print("Error deleting photo: $e");
+                                                                            }
+                                                                          },
+                                                                          child: Text("Cancel"),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                               // Navigator.pop(context);
+                                                              },
+                                                              child: Container(
+                                                                child: Image.asset(
+                                                                  'assets/images/img_17.png',
+                                                                  height: 27,
+                                                                  width: 27,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        top: 12,
+                                                        right: 50,
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(width: 10),
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                _downloadImage(imageURL);
+                                                              },
+                                                              child: Container(
+                                                                child: Image.asset(
+                                                                  'assets/images/img_10.png',
+                                                                  height: 26,
+                                                                  width: 26,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              width: 80,
+                                              height: 100,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  imageURL,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                }
+
+                                return ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: imageWidgets,
+                                );
+                              }
+                            },
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: (){

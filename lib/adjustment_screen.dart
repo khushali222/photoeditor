@@ -110,7 +110,7 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              //_saveImageToGallery(context);
+             // _saveImageToGallery(context);
               _navigateToFilterPage(context, _filteredImage);
             },
             icon: Icon(Icons.check, color: Colors.black),
