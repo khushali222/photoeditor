@@ -328,6 +328,7 @@ class _EnhanceState extends State<Enhance> {
                                   for (var doc in docs) {
                                     final data = doc.data() as Map<String, dynamic>;
                                     final imageURL = data['imageUrl'] as String?;
+                                    print(imageURL);
                                     if (imageURL != null) {
                                       imageWidgets.add(
                                         GestureDetector(
@@ -363,60 +364,24 @@ class _EnhanceState extends State<Enhance> {
                                                           children: [
                                                             SizedBox(width: 10),
                                                             GestureDetector(
-                                                              // onTap: () {
-                                                              //   // showDialog(
-                                                              //   //   context: context,
-                                                              //   //   builder: (BuildContext context) {
-                                                              //   //     return AlertDialog(
-                                                              //   //       title: Text("Confirm Delete"),
-                                                              //   //       content: Text("Are you sure you want to delete this photo?"),
-                                                              //   //       actions: [
-                                                              //   //         TextButton(
-                                                              //   //           onPressed: () {
-                                                              //   //             Navigator.of(context).pop();
-                                                              //   //           },
-                                                              //   //           child: Text("Cancel"),
-                                                              //   //         ),
-                                                              //   //         TextButton(
-                                                              //   //           onPressed: () async {
-                                                              //   //             // Perform delete operation
-                                                              //   //             try {
-                                                              //   //               await FirebaseFirestore.instance
-                                                              //   //                   .collection('users')
-                                                              //   //                   .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                              //   //                   .collection('images')
-                                                              //   //                   .doc(doc.id) // Use doc.id to get the document ID
-                                                              //   //                   .delete();
-                                                              //   //
-                                                              //   //               Navigator.of(context).pop();
-                                                              //   //               Navigator.of(context, rootNavigator: true).pop();
-                                                              //   //             } catch (e) {
-                                                              //   //               print("Error deleting photo: $e");
-                                                              //   //             }
-                                                              //   //           },
-                                                              //   //           child: Text("Delete"),
-                                                              //   //         ),
-                                                              //   //       ],
-                                                              //   //     );
-                                                              //   //   },
-                                                              //   // );
-                                                              //   Navigator.pop(context);
-                                                              // },
-                                                              onTap: () async {
-                                                                // Perform delete operation
-                                                                try {
-                                                                  await FirebaseFirestore.instance
-                                                                      .collection('users')
-                                                                      .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                                      .collection('images')
-                                                                      .doc(doc.id) // Use doc.id to get the document ID
-                                                                      .delete();
-                                                                  Navigator.of(context).pop();
-                                                                  Navigator.of(context, rootNavigator: true).pop();
-                                                                } catch (e) {
-                                                                  print("Error deleting photo: $e");
-                                                                }
+                                                              onTap: () {
+                                                                Navigator.pop(context);
                                                               },
+                                                              // onTap: () async {
+                                                              //   // Perform delete operation
+                                                              //   try {
+                                                              //     await FirebaseFirestore.instance
+                                                              //         .collection('users')
+                                                              //         .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                                                              //         .collection('images')
+                                                              //         .doc(doc.id) // Use doc.id to get the document ID
+                                                              //         .delete();
+                                                              //     Navigator.of(context).pop();
+                                                              //     Navigator.of(context, rootNavigator: true).pop();
+                                                              //   } catch (e) {
+                                                              //     print("Error deleting photo: $e");
+                                                              //   }
+                                                              // },
                                                               child: Container(
                                                                 child: Image.asset(
                                                                   'assets/images/img_17.png',
@@ -1214,37 +1179,7 @@ class _EnhanceState extends State<Enhance> {
                                                             SizedBox(width: 10),
                                                             GestureDetector(
                                                               onTap: () {
-                                                               // Show delete confirmation dialog
-                                                                showDialog(
-                                                                  context: context,
-                                                                  builder: (BuildContext context) {
-                                                                    return AlertDialog(
-                                                                      title: Text("Confirm Delete"),
-                                                                      content: Text("Are you sure you want to delete this photo?"),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed: () async {
-                                                                            // Perform delete operation
-                                                                            try {
-                                                                              await FirebaseFirestore.instance
-                                                                                  .collection('users')
-                                                                                  .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                                                  .collection('images')
-                                                                                  .doc(doc.id) // Use doc.id to get the document ID
-                                                                                  .delete();
-                                                                              Navigator.of(context).pop();
-                                                                              Navigator.of(context, rootNavigator: true).pop();
-                                                                            } catch (e) {
-                                                                              print("Error deleting photo: $e");
-                                                                            }
-                                                                          },
-                                                                          child: Text("Cancel"),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                               // Navigator.pop(context);
+                                                                Navigator.pop(context);
                                                               },
                                                               child: Container(
                                                                 child: Image.asset(
@@ -1303,7 +1238,6 @@ class _EnhanceState extends State<Enhance> {
                                     }
                                   }
                                 }
-
                                 return ListView(
                                   scrollDirection: Axis.horizontal,
                                   children: imageWidgets,
@@ -1313,26 +1247,24 @@ class _EnhanceState extends State<Enhance> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>StartScreen()));
-                        }, 
-                        child: Text("filter"),
-                      ),
-
-                      SizedBox(height: 10,),
-                      ElevatedButton(
-                        onPressed: (){
-                       //   Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageEditorScreen()));
-                        },
-                        child: Text("filter"),
-                      ),
-
+                      // ElevatedButton(
+                      //   onPressed: (){
+                      //     Navigator.push(context, MaterialPageRoute(builder: (context)=>StartScreen()));
+                      //   },
+                      //   child: Text("filter"),
+                      // ),
+                      //
+                      // SizedBox(height: 10,),
+                      // ElevatedButton(
+                      //   onPressed: (){
+                      //  //   Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageEditorScreen()));
+                      //   },
+                      //   child: Text("filter"),
+                      // ),
                     ],
                   ),
                 ),
               ),
-
             ],
           ),
         ),

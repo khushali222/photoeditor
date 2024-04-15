@@ -209,6 +209,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:projects/widgets/provider.dart';
+import 'package:projects/widgets/remove_background.dart';
+import 'package:projects/widgets/sticker.dart';
+import 'package:projects/widgets/text_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../login.dart';
@@ -216,6 +219,7 @@ import '../screen/enhance.dart';
 import 'adjustment_screen.dart';
 import 'cropscren.dart';
 import 'fitler_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -227,9 +231,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _checkAuthState();
     // Initialize originalImage with the current image when the screen is first loaded
     originalImage = Provider.of<AppImageProvider>(context, listen: false).currentImage!;
-    _checkAuthState();
+
   }
 
   void _revertImage() {
@@ -237,42 +242,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // Revert the image to its original state
     appImageProvider.updateImage(originalImage);
   }
-
-  // void _saveImageToGallery() async {
-  //   final appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
-  //   if (appImageProvider.currentImage != null) {
-  //     try {
-  //       // Save the image to the gallery
-  //       final result = await ImageGallerySaver.saveImage(
-  //         Uint8List.fromList(appImageProvider.currentImage!),
-  //         quality: 80, // Adjust quality as needed
-  //       );
-  //
-  //       if (result['isSuccess']) {
-  //         // Show a snackbar to indicate that the image has been saved
-  //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //           content: Text('Image saved to gallery'),
-  //         ));
-  //       } else {
-  //         // Show a snackbar if saving failed
-  //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //           content: Text('Failed to save image to gallery'),
-  //         ));
-  //       }
-  //     } catch (e) {
-  //       // Handle any errors that occur during the saving process
-  //       print('Error saving image: $e');
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //         content: Text('Failed to save image to gallery'),
-  //       ));
-  //     }
-  //   } else {
-  //     // Show a snackbar to indicate that there is no image to save
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text('No image to save'),
-  //     ));
-  //   }
-  // }
 
   void _saveImageToGallery(BuildContext context) async {
     final appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
@@ -289,6 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         // Get download URL of the uploaded image
         final String downloadURL = await storageRef.getDownloadURL();
+        print(downloadURL);
 
         // Save the image to the device's gallery
         final result = await ImageGallerySaver.saveImage(Uint8List.fromList(appImageProvider.currentImage!), name: 'my_image.png');
@@ -329,7 +299,6 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
-
 
   /**/
   // void _saveImageToFirebaseStorage(BuildContext context) async {
@@ -410,6 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton(
               onPressed: (){
+             //   _checkAuthState();
                 _saveImageToGallery(context);
               },
               child: Text("Save", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
@@ -454,13 +424,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.filter_vintage_outlined,
                       'Filter',
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Screen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => FilterScreen()));
                       }),
                   _BottomButton(
                       Icons.tune,
                       'Adjust',
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => Adjustment_Screen()));
+                      }),
+                  _BottomButton(
+                      Icons.text_fields_sharp,
+                      'Text',
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Text_Screen()));
+                      }),
+                  _BottomButton(
+                      Icons.emoji_emotions,
+                      'Stickers',
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => StickerScreen()));
+                      }),
+                  _BottomButton(
+                      Icons.remove,
+                      'Back',
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NewApiScreen()));
                       }),
                 ],
               ),
@@ -470,7 +458,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
   Widget _BottomButton(IconData icon, String title, {required onPressed}) {
     return InkWell(
       onTap: onPressed,

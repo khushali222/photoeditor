@@ -10,6 +10,7 @@ class ImagePicker1{
   pick({required Function(File?) onPick}) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: source);
+   // print(image);
     if (image != null) {
       onPick(File(image.path));
     } else {

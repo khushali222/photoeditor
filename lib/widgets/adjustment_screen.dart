@@ -507,7 +507,8 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
             child: Consumer<AppImageProvider>(
               builder: (BuildContext context, value, Widget? child) {
                 if (value.currentImage != null) {
-                  return Screenshot(
+                  return
+                    Screenshot(
                     controller: screenshotController,
                     child: ColorFiltered(
                       colorFilter: ColorFilter.matrix(adj.matrix),

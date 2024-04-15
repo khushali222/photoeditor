@@ -954,11 +954,13 @@
 //                         LinkLayerData? layer = await Navigator.push(
 //                           context,
 //                           MaterialPageRoute(
-//                             builder: (context) => const LinkEditorImage(),
+//                             builder: (context) => const LinkEdi
+//                             torImage(),
 //                           ),
 //                         );
 //
-//                         if (layer == null) return;
+//                         if (
+//                         layer == null) return;
 //
 //                         undoLayers.clear();
 //                         removedLayers.clear();
