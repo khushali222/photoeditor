@@ -385,10 +385,11 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     hsl[2] /= (imageData.length ~/ 4);
 
     // Calculate the adjustment based on the average saturation
-    double adjustment = hsl[1] - 0.5;
+    double adjustment = hsl[1] - 0.3; // Decrease the subtraction value to reduce saturation adjustment
 
     return adjustment;
   }
+
 
   double calculateAutoHue(Uint8List imageData) {
     // Convert RGB to HSL (Hue, Saturation, Lightness)
@@ -455,16 +456,27 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
         ]);
   }
 
-  showSlider({a,b, c, s, h, se}) {
+  // showSlider({a,b, c, s, h, se}) {
+  //   setState(() {
+  //     showauto = a != null ? true :false;
+  //     showbrightness = b != null ? true : false;
+  //     showcontrast = c != null ? true : false;
+  //     showsaturation = s != null ? true : false;
+  //     showhue = h != null ? true : false;
+  //     showsepia = se != null ? true : false;
+  //   });
+  // }
+  showSlider({a, b, c, s, h, se}) {
     setState(() {
-      showauto = a != null ? true :false;
-      showbrightness = b != null ? true : false;
-      showcontrast = c != null ? true : false;
-      showsaturation = s != null ? true : false;
-      showhue = h != null ? true : false;
-      showsepia = se != null ? true : false;
+      showauto = a != null ? true : false;
+      showbrightness = b != null && Selected != 'Auto' ? true : false;
+      showcontrast = c != null && Selected != 'Auto' ? true : false;
+      showsaturation = s != null && Selected != 'Auto' ? true : false;
+      showhue = h != null && Selected != 'Auto' ? true : false;
+      showsepia = se != null && Selected != 'Auto' ? true : false;
     });
   }
+
 
   @override
   void initState() {
@@ -509,12 +521,12 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                 if (value.currentImage != null) {
                   return
                     Screenshot(
-                    controller: screenshotController,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.matrix(adj.matrix),
-                      child: Image.memory(value.currentImage!),
-                    ),
-                  );
+                      controller: screenshotController,
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.matrix(adj.matrix),
+                        child: Image.memory(value.currentImage!),
+                      ),
+                    );
                 }
                 // If current image is null, show a progress indicator
                 return Center(
@@ -531,18 +543,78 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Visibility(
-                        visible: showauto,
-                        child: slider(
-                          value: auto,
-                          onChanged: (value) {
-                            setState(() {
-                              auto = value;
-                              adjust(a: auto);
-                            });
-                          },
-                        ),
-                      ),
+                      // Visibility(
+                      //   visible: showauto,
+                      //   child: slider(
+                      //     value: auto,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         auto = value;
+                      //         adjust(a: auto);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: showbrightness,
+                      //   child: slider(
+                      //     value: brightness,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         brightness = value;
+                      //         adjust(b: brightness);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: showcontrast,
+                      //   child: slider(
+                      //     value: contrast,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         contrast = value;
+                      //         adjust(c: contrast);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: showsaturation,
+                      //   child: slider(
+                      //     value: saturation,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         saturation = value;
+                      //         adjust(s: saturation);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: showhue,
+                      //   child: slider(
+                      //     value: hue,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         hue = value;
+                      //         adjust(h: hue);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: showsepia,
+                      //   child: slider(
+                      //     value: sepia,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         sepia = value;
+                      //         adjust(se: sepia);
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
                       Visibility(
                         visible: showbrightness,
                         child: slider(
@@ -603,6 +675,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                           },
                         ),
                       ),
+
                     ],
                   ),
                 ),
@@ -770,6 +843,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
 
   // Method to get the current image data
   void autoAdjust() async {
+    print("object");
     // Get the current image data
     Uint8List imageData = await getCurrentImageData();
 
@@ -850,4 +924,3 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
         onChanged: onChanged);
   }
 }
-
