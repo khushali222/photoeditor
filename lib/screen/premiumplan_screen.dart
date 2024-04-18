@@ -223,7 +223,7 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
                 onTap: (){
                   var options = {
                     'key': 'rzp_test_RsqV5b0NEAwbWT',
-                    'amount': 1 * 100, //in the smallest currency sub-unit.
+                    'amount': 300 * 100, //in the smallest currency sub-unit.
                     'name': 'Acme Corp.',
                     'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
                     'description': 'Fine T-Shirt',

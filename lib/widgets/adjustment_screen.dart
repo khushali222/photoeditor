@@ -643,15 +643,26 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                   width: 20,
                 ),
 
+                // _BottomButton(
+                //     Icons.auto_fix_high,
+                //     'Auto',
+                //     color: showauto ? Colors.blue : null,
+                //     onPressed: () {
+                //       Selected = 'Auto';
+                //       showSlider(a: true);
+                //       autoAdjust();
+                //     }),
                 _BottomButton(
                     Icons.auto_fix_high,
                     'Auto',
                     color: showauto ? Colors.blue : null,
                     onPressed: () {
                       Selected = 'Auto';
-                      showSlider(a: true);
-                      autoAdjust();
-                    }),
+                      showSlider(); // Hide all sliders initially
+                      autoAdjust(); // Apply auto-adjustment
+                    }
+                ),
+
                 _BottomButton(
                     Icons.brightness_4,
                     'Brightness',
@@ -703,11 +714,66 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
   }
 
   // Method to auto-adjust all filters
+  // void autoAdjust() async {
+  //   // Get the current image data
+  //   Uint8List imageData = await getCurrentImageData();
+  //
+  //   // Calculate auto-adjusted values for each filter
+  //   double autoBrightness = calculateAutoBrightness(imageData);
+  //   double autoContrast = calculateAutoContrast(imageData);
+  //   double autoSaturation = calculateAutoSaturation(imageData);
+  //   double autoHue = calculateAutoHue(imageData);
+  //   double autoSepia = calculateAutoSepia(imageData);
+  //
+  //   // Update the state with auto-adjusted values
+  //   // Update the state with auto-adjusted values clamped within the valid range
+  //   setState(() {
+  //     brightness = autoBrightness.clamp(-0.9, 1.0);
+  //     contrast = autoContrast.clamp(-0.9, 1.0);
+  //     saturation = autoSaturation.clamp(-0.9, 1.0);
+  //     hue = autoHue.clamp(-0.9, 1.0);
+  //     sepia = autoSepia.clamp(-0.9, 1.0);
+  //     adjust(
+  //       a: autoBrightness.clamp(-0.9, 1.0), // Adjusted for auto slider
+  //       b: autoBrightness,
+  //       c: autoContrast,
+  //       s: autoSaturation,
+  //       h: autoHue,
+  //       se: autoSepia,
+  //     );
+  //     // Update the visibility of sliders based on the selected filter
+  //     switch (Selected) {
+  //       case 'Auto':
+  //         showSlider(a: true);
+  //         break;
+  //       case 'Brightness':
+  //         showSlider(b: true);
+  //         break;
+  //       case 'Contrast':
+  //         showSlider(c: true);
+  //         break;
+  //       case 'Saturation':
+  //         showSlider(s: true);
+  //         break;
+  //       case 'Hue':
+  //         showSlider(h: true);
+  //         break;
+  //       case 'Sepia':
+  //         showSlider(se: true);
+  //         break;
+  //       default:
+  //         showSlider();
+  //     }
+  //   });
+  //
+  // }
+
+  // Method to get the current image data
   void autoAdjust() async {
     // Get the current image data
     Uint8List imageData = await getCurrentImageData();
 
-    // Calculate auto-adjusted values for each filter
+    // Calculate auto-adjusted values for each parameter
     double autoBrightness = calculateAutoBrightness(imageData);
     double autoContrast = calculateAutoContrast(imageData);
     double autoSaturation = calculateAutoSaturation(imageData);
@@ -715,49 +781,33 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     double autoSepia = calculateAutoSepia(imageData);
 
     // Update the state with auto-adjusted values
-    // Update the state with auto-adjusted values clamped within the valid range
     setState(() {
-      brightness = autoBrightness.clamp(-0.9, 1.0);
+      brightness = autoBrightness.clamp(-0.9, 1.0); // Clamp values within the valid range
       contrast = autoContrast.clamp(-0.9, 1.0);
       saturation = autoSaturation.clamp(-0.9, 1.0);
       hue = autoHue.clamp(-0.9, 1.0);
       sepia = autoSepia.clamp(-0.9, 1.0);
-      adjust(
-        a: autoBrightness.clamp(-0.9, 1.0), // Adjusted for auto slider
-        b: autoBrightness,
-        c: autoContrast,
-        s: autoSaturation,
-        h: autoHue,
-        se: autoSepia,
-      );
-      // Update the visibility of sliders based on the selected filter
-      switch (Selected) {
-        case 'Auto':
-          showSlider(a: true);
-          break;
-        case 'Brightness':
-          showSlider(b: true);
-          break;
-        case 'Contrast':
-          showSlider(c: true);
-          break;
-        case 'Saturation':
-          showSlider(s: true);
-          break;
-        case 'Hue':
-          showSlider(h: true);
-          break;
-        case 'Sepia':
-          showSlider(se: true);
-          break;
-        default:
-          showSlider();
-      }
-    });
 
+      // Update the adjustment with auto-adjusted values
+      adjust(
+        b: brightness,
+        c: contrast,
+        s: saturation,
+        h: hue,
+        se: sepia,
+      );
+
+      // Update the visibility of sliders based on the selected filter
+      showSlider(
+        b: true, // Show brightness slider after auto-adjustment
+        c: true, // Show contrast slider after auto-adjustment
+        s: true, // Show saturation slider after auto-adjustment
+        h: true, // Show hue slider after auto-adjustment
+        se: true, // Show sepia slider after auto-adjustment
+      );
+    });
   }
 
-  // Method to get the current image data
   Future<Uint8List> getCurrentImageData() async {
     // Retrieve the current image data from the provider
     AppImageProvider appImageProvider =
