@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:projects/screen/premiumplan_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../filtter.dart';
 import '../profile_page.dart';
 import '../second_home.dart';
@@ -128,6 +130,8 @@ class _EnhanceState extends State<Enhance> {
       );
     }
   }
+  // bool isloading = true;
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     Uint8List? _image = context.watch<ImageProviderPicker>().image;
@@ -218,38 +222,43 @@ class _EnhanceState extends State<Enhance> {
                       SizedBox(
                         width: 10,
                       ),
-                      Stack(children: [
-                        Material(
-                          elevation: 4,
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            height: 30,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.deepPurple[200],
+                      GestureDetector(
+                         onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPlanScreen()));
+                         },
+                        child: Stack(children: [
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: 30,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.deepPurple[200],
+                              ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          top: 7,
-                          left: 4,
-                          child: Image(
-                            image: NetworkImage(
-                              'https://cdn-icons-png.flaticon.com/128/6423/6423882.png',
-                            ),
-                            height: 15,
-                            width: 15,
-                          ),
-                        ),
-                        Positioned(
+                          Positioned(
                             top: 7,
-                            right: 9,
-                            child: Text(
-                              "Pro",
-                              style: TextStyle(fontSize: 10),
-                            )),
-                      ]),
+                            left: 4,
+                            child: Image(
+                              image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/6423/6423882.png',
+                              ),
+                              height: 15,
+                              width: 15,
+                            ),
+                          ),
+                          Positioned(
+                              top: 7,
+                              right: 9,
+                              child: Text(
+                                "Pro",
+                                style: TextStyle(fontSize: 10),
+                              )),
+                        ]),
+                      ),
                       SizedBox(
                         width: 22,
                       ),
@@ -282,6 +291,173 @@ class _EnhanceState extends State<Enhance> {
                           ),
                         ],
                       ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 13, right: 13),
+                      //   child: SizedBox(
+                      //     height: 100,
+                      //     child: StreamBuilder<QuerySnapshot>(
+                      //       stream: FirebaseFirestore.instance
+                      //           .collection('users')
+                      //           .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                      //           .collection('images')
+                      //           .orderBy('uploadTime', descending: true)
+                      //           .snapshots(),
+                      //       builder: (context, snapshot) {
+                      //         if (snapshot.connectionState == ConnectionState.waiting) {
+                      //           return Center(child: CircularProgressIndicator());
+                      //         } else if (snapshot.hasError) {
+                      //           return Text('Error: ${snapshot.error}');
+                      //         } else {
+                      //           final List<Widget> imageWidgets = [];
+                      //           final docs = snapshot.data!.docs;
+                      //
+                      //           // If there are no images uploaded by the user in Firestore, display default local images
+                      //           if (docs.isEmpty) {
+                      //             // Add local images to the list
+                      //             for (var index = 0; index < products.length; index++) {
+                      //               imageWidgets.add(
+                      //                 Padding(
+                      //                   padding: const EdgeInsets.all(8.0),
+                      //                   child: Container(
+                      //                     height: 50,
+                      //                     width: 80,
+                      //                     child: ClipRRect(
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       child: Image.asset(
+                      //                         '${products[index]['image_path']}',
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               );
+                      //             }
+                      //           } else {
+                      //             // If there are images uploaded by the user in Firestore, display them
+                      //             for (var doc in docs) {
+                      //               final data = doc.data() as Map<String, dynamic>;
+                      //               final imageURL = data['imageUrl'] as String?;
+                      //               print(imageURL);
+                      //               if (imageURL != null) {
+                      //                 imageWidgets.add(
+                      //                   GestureDetector(
+                      //                     onTap: () {
+                      //                       showDialog(
+                      //                         context: context,
+                      //                         builder: (BuildContext context) {
+                      //                           return Dialog(
+                      //                             child: Stack(
+                      //                               children: [
+                      //                                 Padding(
+                      //                                   padding: const EdgeInsets.only(
+                      //                                     left: 30,
+                      //                                     right: 30,
+                      //                                     top: 60,
+                      //                                     bottom: 40,
+                      //                                   ),
+                      //                                   child: Container(
+                      //                                     width: MediaQuery.of(context).size.width * 0.7,
+                      //                                     height: MediaQuery.of(context).size.width * 0.7,
+                      //                                     decoration: BoxDecoration(
+                      //                                       image: DecorationImage(
+                      //                                         image: NetworkImage(imageURL),
+                      //                                         fit: BoxFit.cover,
+                      //                                       ),
+                      //                                     ),
+                      //                                   ),
+                      //                                 ),
+                      //                                 Positioned(
+                      //                                   top: 10,
+                      //                                   right: 10,
+                      //                                   child: Row(
+                      //                                     children: [
+                      //                                       SizedBox(width: 10),
+                      //                                       GestureDetector(
+                      //                                         onTap: () {
+                      //                                           Navigator.pop(context);
+                      //                                         },
+                      //                                         // onTap: () async {
+                      //                                         //   // Perform delete operation
+                      //                                         //   try {
+                      //                                         //     await FirebaseFirestore.instance
+                      //                                         //         .collection('users')
+                      //                                         //         .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                      //                                         //         .collection('images')
+                      //                                         //         .doc(doc.id) // Use doc.id to get the document ID
+                      //                                         //         .delete();
+                      //                                         //     Navigator.of(context).pop();
+                      //                                         //     Navigator.of(context, rootNavigator: true).pop();
+                      //                                         //   } catch (e) {
+                      //                                         //     print("Error deleting photo: $e");
+                      //                                         //   }
+                      //                                         // },
+                      //                                         child: Container(
+                      //                                           child: Image.asset(
+                      //                                             'assets/images/img_17.png',
+                      //                                             height: 27,
+                      //                                             width: 27,
+                      //                                           ),
+                      //                                         ),
+                      //                                       ),
+                      //                                     ],
+                      //                                   ),
+                      //                                 ),
+                      //                                 Positioned(
+                      //                                   top: 12,
+                      //                                   right: 50,
+                      //                                   child: Row(
+                      //                                     children: [
+                      //                                       SizedBox(width: 10),
+                      //                                       GestureDetector(
+                      //                                         onTap: () {
+                      //                                           _downloadImage(imageURL);
+                      //                                         },
+                      //                                         child: Container(
+                      //                                           child: Image.asset(
+                      //                                             'assets/images/img_10.png',
+                      //                                             height: 26,
+                      //                                             width: 26,
+                      //                                           ),
+                      //                                         ),
+                      //                                       ),
+                      //                                     ],
+                      //                                   ),
+                      //                                 ),
+                      //                               ],
+                      //                             ),
+                      //                           );
+                      //                         },
+                      //                       );
+                      //                     },
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(8.0),
+                      //                       child: Container(
+                      //                         width: 80,
+                      //                         height: 100,
+                      //                         child: ClipRRect(
+                      //                           borderRadius: BorderRadius.circular(10),
+                      //                           child: Image.network(
+                      //                             imageURL,
+                      //                             fit: BoxFit.cover,
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               }
+                      //             }
+                      //           }
+                      //
+                      //           return ListView(
+                      //             scrollDirection: Axis.horizontal,
+                      //             children: imageWidgets,
+                      //           );
+                      //         }
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(left: 13, right: 13),
                         child: SizedBox(
@@ -295,14 +471,29 @@ class _EnhanceState extends State<Enhance> {
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Center(child: CircularProgressIndicator());
+                                isLoading = true; // Set isLoading to true while loading
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 5, // Adjust the itemCount as per your needs
+                                    itemBuilder: (context, index) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: 80,
+                                        height: 100,
+                                        color: Colors.white, // Adjust the shimmer container color
+                                      ),
+                                    ),
+                                  ),
+                                );
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 final List<Widget> imageWidgets = [];
                                 final docs = snapshot.data!.docs;
-
-                                // If there are no images uploaded by the user in Firestore, display default local images
+                                // Your existing code for displaying images
                                 if (docs.isEmpty) {
                                   // Add local images to the list
                                   for (var index = 0; index < products.length; index++) {
@@ -367,21 +558,6 @@ class _EnhanceState extends State<Enhance> {
                                                               onTap: () {
                                                                 Navigator.pop(context);
                                                               },
-                                                              // onTap: () async {
-                                                              //   // Perform delete operation
-                                                              //   try {
-                                                              //     await FirebaseFirestore.instance
-                                                              //         .collection('users')
-                                                              //         .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                              //         .collection('images')
-                                                              //         .doc(doc.id) // Use doc.id to get the document ID
-                                                              //         .delete();
-                                                              //     Navigator.of(context).pop();
-                                                              //     Navigator.of(context, rootNavigator: true).pop();
-                                                              //   } catch (e) {
-                                                              //     print("Error deleting photo: $e");
-                                                              //   }
-                                                              // },
                                                               child: Container(
                                                                 child: Image.asset(
                                                                   'assets/images/img_17.png',
@@ -439,7 +615,7 @@ class _EnhanceState extends State<Enhance> {
                                     }
                                   }
                                 }
-
+                                isLoading = false; // Set isLoading to false after data is loaded
                                 return ListView(
                                   scrollDirection: Axis.horizontal,
                                   children: imageWidgets,
@@ -449,6 +625,7 @@ class _EnhanceState extends State<Enhance> {
                           ),
                         ),
                       ),
+
                       SizedBox(
                         height: 10,
                       ),
@@ -873,201 +1050,180 @@ class _EnhanceState extends State<Enhance> {
                       SizedBox(
                         height: 10,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 13, right: 13),
-                        child: SizedBox(
-                          height: 100,
-                          child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('users')
-                                .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                .collection('images')
-                                .orderBy('uploadTime', descending: true)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Center(child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                final List<Widget> imageWidgets = [];
-                                final docs = snapshot.data!.docs;
+                  Padding(
+                    padding: const EdgeInsets.only(left: 13, right: 13),
+                    child: SizedBox(
+                      height: 100,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                            .collection('images')
+                            .orderBy('uploadTime', descending: true)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 5, // Adjust the itemCount as per your needs
+                                itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 80,
+                                    height: 100,
+                                    color: Colors.white, // Adjust the shimmer container color
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            final List<Widget> imageWidgets = [];
+                            final docs = snapshot.data!.docs;
 
-                                // Filter documents based on the month of March (month number 3)
-                                final filteredDocs = docs.where((doc) {
-                                  final data = doc.data() as Map<String, dynamic>;
-                                  final uploadTime = DateTime.parse(data['uploadTime']);
-                                  return uploadTime.month == 4; // March
-                                }).toList();
+                            // Filter documents based on the month of March (month number 3)
+                            final filteredDocs = docs.where((doc) {
+                              final data = doc.data() as Map<String, dynamic>;
+                              final uploadTime = DateTime.parse(data['uploadTime']);
+                              return uploadTime.month == 4; // March
+                            }).toList();
 
-                                // If there are no images uploaded by the user for March, display default local images
-                                if (filteredDocs.isEmpty) {
-                                  for (var index = 0; index < products.length; index++) {
-                                    imageWidgets.add(
-                                      Padding(
+                            // If there are no images uploaded by the user for March, display default local images
+                            if (filteredDocs.isEmpty) {
+                              for (var index = 0; index < products.length; index++) {
+                                imageWidgets.add(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 80,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          '${products[index]['image_path']}',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              // Display images uploaded by the user for March
+                              for (var doc in filteredDocs) {
+                                final data = doc.data() as Map<String, dynamic>;
+                                final imageURL = data['imageUrl'] as String?;
+                                if (imageURL != null) {
+                                  imageWidgets.add(
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Show dialog to view image
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              child: Stack(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      left: 30,
+                                                      right: 30,
+                                                      top: 60,
+                                                      bottom: 40,
+                                                    ),
+                                                    child: Container(
+                                                      width: MediaQuery.of(context).size.width * 0.7,
+                                                      height: MediaQuery.of(context).size.width * 0.7,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(imageURL),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 10,
+                                                    right: 10,
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Container(
+                                                            child: Image.asset(
+                                                              'assets/images/img_17.png',
+                                                              height: 27,
+                                                              width: 27,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 12,
+                                                    right: 50,
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            _downloadImage(imageURL);
+                                                          },
+                                                          child: Container(
+                                                            child: Image.asset(
+                                                              'assets/images/img_10.png',
+                                                              height: 26,
+                                                              width: 26,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          height: 50,
                                           width: 80,
+                                          height: 100,
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              '${products[index]['image_path']}',
+                                            child: Image.network(
+                                              imageURL,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    );
-                                  }
-                                } else {
-                                  // Display images uploaded by the user for March
-                                  for (var doc in filteredDocs) {
-                                    final data = doc.data() as Map<String, dynamic>;
-                                    final imageURL = data['imageUrl'] as String?;
-                                    if (imageURL != null) {
-                                      imageWidgets.add(
-                                        GestureDetector(
-                                          onTap: () {
-                                            // Show dialog to view image
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Dialog(
-                                                  child: Stack(
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(
-                                                          left: 30,
-                                                          right: 30,
-                                                          top: 60,
-                                                          bottom: 40,
-                                                        ),
-                                                        child: Container(
-                                                          width: MediaQuery.of(context).size.width * 0.7,
-                                                          height: MediaQuery.of(context).size.width * 0.7,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                              image: NetworkImage(imageURL),
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        top: 10,
-                                                        right: 10,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(width: 10),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                // Show delete confirmation dialog
-                                                                // showDialog(
-                                                                //   context: context,
-                                                                //   builder: (BuildContext context) {
-                                                                //     return AlertDialog(
-                                                                //       title: Text("Confirm Delete"),
-                                                                //       content: Text("Are you sure you want to delete this photo?"),
-                                                                //       actions: [
-                                                                //         TextButton(
-                                                                //           onPressed: () {
-                                                                //             Navigator.of(context).pop();
-                                                                //           },
-                                                                //           child: Text("Cancel"),
-                                                                //         ),
-                                                                //         TextButton(
-                                                                //           onPressed: () async {
-                                                                //             // Perform delete operation
-                                                                //             try {
-                                                                //               await FirebaseFirestore.instance
-                                                                //                   .collection('users')
-                                                                //                   .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                                                //                   .collection('images')
-                                                                //                   .doc(doc.id) // Use doc.id to get the document ID
-                                                                //                   .delete();
-                                                                //
-                                                                //               Navigator.of(context).pop();
-                                                                //               Navigator.of(context, rootNavigator: true).pop();
-                                                                //             } catch (e) {
-                                                                //               print("Error deleting photo: $e");
-                                                                //             }
-                                                                //           },
-                                                                //           child: Text("Delete"),
-                                                                //         ),
-                                                                //       ],
-                                                                //     );
-                                                                //   },
-                                                                // );
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: Container(
-                                                                child: Image.asset(
-                                                                  'assets/images/img_17.png',
-                                                                  height: 27,
-                                                                  width: 27,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        top: 12,
-                                                        right: 50,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(width: 10),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                _downloadImage(imageURL);
-                                                              },
-                                                              child: Container(
-                                                                child: Image.asset(
-                                                                  'assets/images/img_10.png',
-                                                                  height: 26,
-                                                                  width: 26,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              width: 80,
-                                              height: 100,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(10),
-                                                child: Image.network(
-                                                  imageURL,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }
+                                    ),
+                                  );
                                 }
-
-                                return ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: imageWidgets,
-                                );
                               }
-                            },
-                          ),
-                        ),
+                            }
+
+                            return ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: imageWidgets,
+                            );
+                          }
+                        },
                       ),
+                    ),
+                  ),
+
                       SizedBox(
                         height: 10,
                       ),
@@ -1090,163 +1246,180 @@ class _EnhanceState extends State<Enhance> {
                         height: 10,
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 13, right: 13),
-                        child: SizedBox(
-                          height: 100,
-                          child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('users')
-                                .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
-                                .collection('images')
-                                .orderBy('uploadTime', descending: true)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Center(child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                final List<Widget> imageWidgets = [];
-                                final docs = snapshot.data!.docs;
+                  Padding(
+                    padding: const EdgeInsets.only(left: 13, right: 13),
+                    child: SizedBox(
+                      height: 100,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc('${FirebaseAuth.instance.currentUser?.uid ?? 'default_uid'}')
+                            .collection('images')
+                            .orderBy('uploadTime', descending: true)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 5, // Adjust the itemCount as per your needs
+                                itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 80,
+                                    height: 100,
+                                    color: Colors.white, // Adjust the shimmer container color
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            final List<Widget> imageWidgets = [];
+                            final docs = snapshot.data!.docs;
 
-                                // Filter documents based on the month of March (month number 3)
-                                final filteredDocs = docs.where((doc) {
-                                  final data = doc.data() as Map<String, dynamic>;
-                                  final uploadTime = DateTime.parse(data['uploadTime']);
-                                  return uploadTime.month == 3; // March
-                                }).toList();
+                            // Filter documents based on the month of March (month number 3)
+                            final filteredDocs = docs.where((doc) {
+                              final data = doc.data() as Map<String, dynamic>;
+                              final uploadTime = DateTime.parse(data['uploadTime']);
+                              return uploadTime.month == 3; // March
+                            }).toList();
 
-                                // If there are no images uploaded by the user for March, display default local images
-                                if (filteredDocs.isEmpty) {
-                                  for (var index = 0; index < products.length; index++) {
-                                    imageWidgets.add(
-                                      Padding(
+                            // If there are no images uploaded by the user for March, display default local images
+                            if (filteredDocs.isEmpty) {
+                              for (var index = 0; index < products.length; index++) {
+                                imageWidgets.add(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 80,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          '${products[index]['image_path']}',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              // Display images uploaded by the user for March
+                              for (var doc in filteredDocs) {
+                                final data = doc.data() as Map<String, dynamic>;
+                                final imageURL = data['imageUrl'] as String?;
+                                if (imageURL != null) {
+                                  imageWidgets.add(
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Show dialog to view image
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              child: Stack(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      left: 30,
+                                                      right: 30,
+                                                      top: 60,
+                                                      bottom: 40,
+                                                    ),
+                                                    child: Container(
+                                                      width: MediaQuery.of(context).size.width * 0.7,
+                                                      height: MediaQuery.of(context).size.width * 0.7,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(imageURL),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 10,
+                                                    right: 10,
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Container(
+                                                            child: Image.asset(
+                                                              'assets/images/img_17.png',
+                                                              height: 27,
+                                                              width: 27,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 12,
+                                                    right: 50,
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            _downloadImage(imageURL);
+                                                          },
+                                                          child: Container(
+                                                            child: Image.asset(
+                                                              'assets/images/img_10.png',
+                                                              height: 26,
+                                                              width: 26,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          height: 50,
                                           width: 80,
+                                          height: 100,
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              '${products[index]['image_path']}',
+                                            child: Image.network(
+                                              imageURL,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    );
-                                  }
-                                } else {
-                                  // Display images uploaded by the user for March
-                                  for (var doc in filteredDocs) {
-                                    final data = doc.data() as Map<String, dynamic>;
-                                    final imageURL = data['imageUrl'] as String?;
-                                    if (imageURL != null) {
-                                      imageWidgets.add(
-                                        GestureDetector(
-                                          onTap: () {
-                                            // Show dialog to view image
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Dialog(
-                                                  child: Stack(
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(
-                                                          left: 30,
-                                                          right: 30,
-                                                          top: 60,
-                                                          bottom: 40,
-                                                        ),
-                                                        child: Container(
-                                                          width: MediaQuery.of(context).size.width * 0.7,
-                                                          height: MediaQuery.of(context).size.width * 0.7,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                              image: NetworkImage(imageURL),
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        top: 10,
-                                                        right: 10,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(width: 10),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: Container(
-                                                                child: Image.asset(
-                                                                  'assets/images/img_17.png',
-                                                                  height: 27,
-                                                                  width: 27,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        top: 12,
-                                                        right: 50,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(width: 10),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                _downloadImage(imageURL);
-                                                              },
-                                                              child: Container(
-                                                                child: Image.asset(
-                                                                  'assets/images/img_10.png',
-                                                                  height: 26,
-                                                                  width: 26,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              width: 80,
-                                              height: 100,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(10),
-                                                child: Image.network(
-                                                  imageURL,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }
+                                    ),
+                                  );
                                 }
-                                return ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: imageWidgets,
-                                );
                               }
-                            },
-                          ),
-                        ),
+                            }
+
+                            return ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: imageWidgets,
+                            );
+                          }
+                        },
                       ),
+                    ),
+                  ),
+
                       // ElevatedButton(
                       //   onPressed: (){
                       //     Navigator.push(context, MaterialPageRoute(builder: (context)=>StartScreen()));

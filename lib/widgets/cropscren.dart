@@ -63,7 +63,6 @@ class _CropScreenState extends State<CropScreen> {
                   paddingSize: 25.0,
                   alwaysMove: true,
                 );
-
               }
               return Center(
                 child: CircularProgressIndicator(),

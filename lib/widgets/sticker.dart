@@ -45,7 +45,7 @@ class _StickerScreenState extends State<StickerScreen> {
                 if(!mounted) return;
                 Navigator.of(context).pop();
               },
-              icon: const Icon(Icons.done)
+              icon: const Icon(Icons.done,color: Colors.white,)
           )
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/login.dart';
+import 'package:projects/screen/premiumplan_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Setting extends StatefulWidget {
@@ -59,7 +60,7 @@ class _SettingState extends State<Setting> {
               borderRadius: BorderRadius.circular(50),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                       children: [
                         SizedBox(
@@ -174,8 +175,7 @@ class _SettingState extends State<Setting> {
                                       SizedBox(width: 20,),
                                       GestureDetector(
                                         onTap: (){
-                                          _logout();
-
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPlanScreen()));
                                         },
                                         child: Material(
                                             elevation: 4,
@@ -319,8 +319,7 @@ class _SettingState extends State<Setting> {
                         GestureDetector(
                           onTap: (){
                             _logout();
-
-                          },
+                            },
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child:
