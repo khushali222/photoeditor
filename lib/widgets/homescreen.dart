@@ -557,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
       items: [
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.save),
+            leading: Icon(Icons.save,color: Colors.black,),
             title: Text('Save'),
           ),
           onTap: () {
@@ -567,7 +567,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.hd),
+            leading: Icon(Icons.hd,color: Colors.black),
             title: Text('HD Save'),
           ),
           onTap: () {
@@ -669,7 +669,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton(onPressed: (){
               _showSaveOptions(context);
-            }, child: Text("Save")),
+            }, child: Text("Save",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)),
             
             IconButton(
               onPressed: _revertImage,

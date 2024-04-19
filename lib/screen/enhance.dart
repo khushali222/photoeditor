@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart'as http;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:projects/screen/premiumplan_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:ruler_picker_bn/ruler_picker_bn.dart';
 import 'package:shimmer/shimmer.dart';
 import '../filtter.dart';
 import '../profile_page.dart';
@@ -28,6 +30,8 @@ class _EnhanceState extends State<Enhance> {
   List<dynamic> storageImages = [];
   late AppImageProvider appImageProvider;
   String? userName;
+  int valueKG = 0;
+  int valueCM = 0;
   Future<void> fetchUserName() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -1419,6 +1423,7 @@ class _EnhanceState extends State<Enhance> {
                       ),
                     ),
                   ),
+                      SizedBox(height: 10,),
 
                       // ElevatedButton(
                       //   onPressed: (){

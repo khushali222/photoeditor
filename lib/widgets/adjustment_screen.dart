@@ -1,12 +1,14 @@
 import 'dart:typed_data';
-
 import 'package:colorfilter_generator/addons.dart';
 import 'package:colorfilter_generator/colorfilter_generator.dart';
 import 'package:crop_image/crop_image.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/widgets/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:ruler_picker_bn/ruler_picker_bn.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+
 
 import 'homescreen.dart';
 class Adjustment_Screen extends StatefulWidget {
@@ -379,17 +381,13 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
       hsl[1] += delta / (1 - (cmax + cmin));
       hsl[2] += (cmax + cmin) / 2;
     }
-
     hsl[0] /= (imageData.length ~/ 4);
     hsl[1] /= (imageData.length ~/ 4);
     hsl[2] /= (imageData.length ~/ 4);
-
     // Calculate the adjustment based on the average saturation
     double adjustment = hsl[1] - 0.3; // Decrease the subtraction value to reduce saturation adjustment
-
     return adjustment;
   }
-
 
   double calculateAutoHue(Uint8List imageData) {
     // Convert RGB to HSL (Hue, Saturation, Lightness)
@@ -468,7 +466,8 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
   // }
   showSlider({a, b, c, s, h, se}) {
     setState(() {
-      showauto = a != null ? true : false;
+      // showauto = a != null ? true : false;
+      showauto = a != null ? true : showauto;
       showbrightness = b != null && Selected != 'Auto' ? true : false;
       showcontrast = c != null && Selected != 'Auto' ? true : false;
       showsaturation = s != null && Selected != 'Auto' ? true : false;
@@ -483,6 +482,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     super.initState();
     adjust();
     appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
+    showauto = false;
   }
 
   @override
@@ -726,15 +726,21 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                 //       autoAdjust();
                 //     }),
                 _BottomButton(
-                    Icons.auto_fix_high,
-                    'Auto',
-                    color: showauto ? Colors.blue : null,
-                    onPressed: () {
+                  Icons.auto_fix_high,
+                  'Auto',
+                  color: showauto ? Colors.blue : null, // Set color based on showauto
+                  // Set color based on showauto
+                  onPressed: () {
+                    setState(() {
+                      showauto = true; // Set showauto to true when the button is pressed
                       Selected = 'Auto';
                       showSlider(); // Hide all sliders initially
                       autoAdjust(); // Apply auto-adjustment
-                    }
+                    });
+                    print('showauto: $showauto'); // Print showauto value for debugging
+                  },
                 ),
+
 
                 _BottomButton(
                     Icons.brightness_4,
@@ -850,7 +856,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     // Calculate auto-adjusted values for each parameter
     double autoBrightness = calculateAutoBrightness(imageData);
     double autoContrast = calculateAutoContrast(imageData);
-    double autoSaturation = calculateAutoSaturation(imageData);
+    double autoSaturation = calculateAutoSaturation(imageData) * 0.60;
     double autoHue = calculateAutoHue(imageData);
     double autoSepia = calculateAutoSepia(imageData);
 
@@ -858,7 +864,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     setState(() {
       brightness = autoBrightness.clamp(-0.9, 1.0); // Clamp values within the valid range
       contrast = autoContrast.clamp(-0.9, 1.0);
-      saturation = autoSaturation.clamp(-0.9, 1.0);
+      //saturation = autoSaturation.clamp(-0.14, 1.0);
       hue = autoHue.clamp(-0.9, 1.0);
       sepia = autoSepia.clamp(-0.9, 1.0);
 
@@ -866,7 +872,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
       adjust(
         b: brightness,
         c: contrast,
-        s: saturation,
+       // s: saturation,
         h: hue,
         se: sepia,
       );
@@ -875,7 +881,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
       showSlider(
         b: true, // Show brightness slider after auto-adjustment
         c: true, // Show contrast slider after auto-adjustment
-        s: true, // Show saturation slider after auto-adjustment
+      //  s: true, // Show saturation slider after auto-adjustment
         h: true, // Show hue slider after auto-adjustment
         se: true, // Show sepia slider after auto-adjustment
       );
@@ -892,7 +898,6 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
     }
     return imageData;
   }
-
   Widget _BottomButton(IconData icon, String title,
       {Color? color, required onPressed}) {
     return InkWell(
@@ -921,6 +926,28 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
         value: value,
         max: 1,
         min: -0.9,
+      //  divisions: value >= 50 ? 10 : 20,
         onChanged: onChanged);
   }
+
+  // Widget slider({label, value, onChanged}) {
+  //   // Calculate the total width required to cover the range from -0.9 to 1
+  //   double totalWidth = (1 - (-0.9)) * 100; // Assuming each unit occupies 50 pixels
+  //   return SizedBox(
+  //     width: totalWidth,
+  //     height: 75,
+  //     child: RulerPicker(
+  //       onChange: (newValue) {
+  //         // Convert the new value to the range from -0.9 to 1
+  //         double scaledValue = (newValue - (-0.9)) / (1 - (-0.9)) * (1 - (-0.9)) + (-0.9);
+  //         onChanged(scaledValue);
+  //       },
+  //       background: Color(0xff212121),
+  //       lineColor: Colors.white,
+  //       direction: Axis.horizontal,
+  //       startValue: ((value - (-0.9)) / (1 - (-0.9)) * (1 - (-0.9)) + (-0.9)).toInt(),
+  //       maxValue: 1,
+  //     ),
+  //   );
+  // }
 }
