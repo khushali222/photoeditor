@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../widgets/plan_details.dart';
 import 'enhance.dart';
 
 class PremiumPlanScreen extends StatefulWidget {
@@ -18,16 +20,72 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
+  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  //
+  //   Fluttertoast.showToast(
+  //     msg: "Payment successful",
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     backgroundColor: Colors.green,
+  //     textColor: Colors.white,
+  //   );
+  // }
+  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  //   Fluttertoast.showToast(
+  //     msg: "Payment successful",
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     backgroundColor: Colors.green,
+  //     textColor: Colors.white,
+  //   );
+  //   // Set result to indicate premium plan purchased
+  //   Navigator.pop(context, true);
+  // }
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
+    Fluttertoast.showToast(
+      msg: "Payment successful",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+
+    // Navigate to Plan_Details screen with the purchased plan details
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Plan_Details(
+          arguments: PlanDetailsArguments(
+            planName: "Photo Me Pro", // Example plan name
+            duration: "1 month", // Example duration
+            price: 10, // Example price
+          ),
+        ),
+      ),
+    );
   }
 
+
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
+
+    Fluttertoast.showToast(
+      msg: "Payment failed. Please try again later.",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
+
+    Fluttertoast.showToast(
+      msg: "Payment via external wallet (${response.walletName}) selected.",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.blue,
+      textColor: Colors.white,
+    );
   }
 
   void dispose() {
@@ -194,7 +252,7 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
                               color: _selectedDuration == "1 month" ? Colors.white : Colors.black, // Change text color when selected
                             ),),
                             Spacer(),
-                            Text("rs 10/Month", style: TextStyle(
+                            Text(" ₹ 10/Month", style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                               color: _selectedDuration == "1 month" ? Colors.white : Colors.black, // Change text color when selected
@@ -209,7 +267,7 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
               ),
             ),
             SizedBox(height: 20,),
-// Widget for 1 year plan
+            // Widget for 1 year plan
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: GestureDetector(
@@ -240,7 +298,7 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
                               color: _selectedDuration == "1 year" ? Colors.white : Colors.black, // Change text color when selected
                             ),),
                             Spacer(),
-                            Text("rs 100/year ",style: TextStyle(
+                            Text(" ₹ 100/year ",style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                               color: _selectedDuration == "1 year" ? Colors.white : Colors.black, // Change text color when selected
@@ -254,8 +312,8 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
                 ),
               ),
             ),
-
             SizedBox(height: 20,),
+            //cancel anytime
             Text(
               "Cancel anytime",
               style: TextStyle(fontSize: 16,color: Colors.grey),
@@ -289,7 +347,7 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
                     height: 39,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple[200],
+                      color: Colors.deepPurple[300],
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Center(

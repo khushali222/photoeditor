@@ -485,6 +485,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:projects/widgets/provider.dart';
 import 'package:projects/widgets/remove_background.dart';
@@ -538,6 +539,46 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // void _showSaveOptions(BuildContext context) {
+  //   final RenderBox button = context.findRenderObject() as RenderBox;
+  //   final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
+  //
+  //   final Offset buttonTopRight = button.localToGlobal(button.size.topRight(Offset.zero), ancestor: overlay);
+  //
+  //   final RelativeRect position = RelativeRect.fromLTRB(
+  //     buttonTopRight.dx,
+  //     buttonTopRight.dy + kToolbarHeight + 40, // Adjust position below app bar
+  //     buttonTopRight.dx + 4, // Adjust the horizontal offset as needed
+  //     buttonTopRight.dy + kToolbarHeight + 60, // Adjust the total height of the menu by increasing this value
+  //   );
+  //
+  //   showMenu(
+  //     context: context,
+  //     position: position,
+  //     items: [
+  //       PopupMenuItem(
+  //         child: ListTile(
+  //           leading: Icon(Icons.save,color: Colors.black,),
+  //           title: Text('Save'),
+  //         ),
+  //         onTap: () {
+  //           // Handle save action
+  //           _saveImageToGallery(context);
+  //         },
+  //       ),
+  //       PopupMenuItem(
+  //         child: ListTile(
+  //           leading: Icon(Icons.hd,color: Colors.black),
+  //           title: Text('HD Save'),
+  //         ),
+  //         onTap: () {
+  //           Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen()));
+  //          // _saveImageToGalleryhd(context);
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
   void _showSaveOptions(BuildContext context) {
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
@@ -557,7 +598,7 @@ class _HomeScreenState extends State<HomeScreen> {
       items: [
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.save,color: Colors.black,),
+            leading: Icon(Icons.save, color: Colors.black),
             title: Text('Save'),
           ),
           onTap: () {
@@ -567,12 +608,27 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.hd,color: Colors.black),
+            leading: Icon(Icons.hd, color: Colors.black),
             title: Text('HD Save'),
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen()));
-            // _saveImageToGalleryhd(context);
+            // Navigate to PremiumPlanScreen
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen())).then((value) {
+              // Handle result from PremiumPlanScreen
+              if (value == true) {
+                // Premium plan purchased, proceed with HD save
+                _saveImageToGalleryhd(context);
+              } else {
+                // Premium plan not purchased
+                Fluttertoast.showToast(
+                  msg: "Premium plan not purchased.",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                );
+              }
+            });
           },
         ),
       ],
@@ -603,7 +659,75 @@ class _HomeScreenState extends State<HomeScreen> {
 
         // Save the image to the device's gallery
         final result = await ImageGallerySaver.saveImage(Uint8List.fromList(appImageProvider.currentImage!),
-          name: 'my_image.png',quality: 60,);
+          name: 'my_image.png',
+          quality: 60,
+
+        );
+        print(result);
+
+        // Save the download URL to Firestore
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          throw Exception('User not authenticated');
+        }
+        final DateTime uploadTime = DateTime.now();
+        final userId = user.uid;
+        final userRef = FirebaseFirestore.instance.collection('users').doc(userId).collection('images');
+        await userRef.add({
+          'imageUrl': downloadURL,
+          'uploadTime': uploadTime.toIso8601String(),
+        });
+
+        // Show a snackbar to indicate success
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Image saved Gallery'),
+        ));
+      } catch (e) {
+        // Handle any errors that occur during the process
+        print('Error saving image: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save image'),
+          ),
+        );
+      } finally {
+        setState(() {
+          _isSaving = false; // Set _isSaving to false after saving
+        });
+      }
+    } else {
+      // Show a snackbar if there is no image to save
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No image to save'),
+        ),
+      );
+    }
+  }
+  void _saveImageToGalleryhd(BuildContext context) async {
+    final appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
+    if (appImageProvider.currentImage != null) {
+      try {
+        setState(() {
+          _isSaving = true; // Set _isSaving to true before saving
+        });
+
+        // Upload the image to cloud storage (Firebase Storage)
+        final firebase_storage.Reference storageRef =
+        firebase_storage.FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+        final firebase_storage.UploadTask uploadTask = storageRef.putData(
+          Uint8List.fromList(appImageProvider.currentImage!),
+          firebase_storage.SettableMetadata(contentType: 'image/png'),
+        );
+        await uploadTask;
+
+        // Get download URL of the uploaded image
+        final String downloadURL = await storageRef.getDownloadURL();
+        print(downloadURL);
+
+        // Save the image to the device's gallery
+        final result = await ImageGallerySaver.saveImage(Uint8List.fromList(appImageProvider.currentImage!),
+          name: 'my_image.png',quality: 100,);
         print(result);
 
         // Save the download URL to Firestore
@@ -647,6 +771,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
+    print('$h,height');
+    print(w);
     return WillPopScope(
       onWillPop: () async {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Enhance()));
@@ -697,53 +825,59 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
     bottomNavigationBar: Container(
-            height: 58,
+            // height: 58,
+      height: 110,
             width: double.infinity,
             color: Colors.black,
             child: SafeArea(
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 20,
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        _BottomButton(
+                            Icons.crop,
+                            'Crop',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CropScreen()));
+                            }),
+                        _BottomButton(
+                            Icons.filter_vintage_outlined,
+                            'Filter',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => FilterScreen()));
+                            }),
+                        _BottomButton(
+                            Icons.tune,
+                            'Adjust',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Adjustment_Screen()));
+                            }),
+                        _BottomButton(
+                            Icons.text_fields_sharp,
+                            'Text',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Text_Screen()));
+                            }),
+                        _BottomButton(
+                            Icons.emoji_emotions,
+                            'Stickers',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => StickerScreen()));
+                            }),
+                        _BottomButton(
+                            Icons.remove,
+                            'Back',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewApiScreen()));
+                            }),
+                      ],
                     ),
-                    _BottomButton(
-                        Icons.crop,
-                        'Crop',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CropScreen()));
-                        }),
-                    _BottomButton(
-                        Icons.filter_vintage_outlined,
-                        'Filter',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => FilterScreen()));
-                        }),
-                    _BottomButton(
-                        Icons.tune,
-                        'Adjust',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Adjustment_Screen()));
-                        }),
-                    _BottomButton(
-                        Icons.text_fields_sharp,
-                        'Text',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Text_Screen()));
-                        }),
-                    _BottomButton(
-                        Icons.emoji_emotions,
-                        'Stickers',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StickerScreen()));
-                        }),
-                    _BottomButton(
-                        Icons.remove,
-                        'Back',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => NewApiScreen()));
-                        }),
                   ],
                 ),
               ),

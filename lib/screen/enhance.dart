@@ -77,6 +77,24 @@ class _EnhanceState extends State<Enhance> {
     appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
 
   }
+  List categorys = [
+    {
+      "image_path": 'assets/images/img_9.png',
+      "Product_name": "All photos",
+    },
+    {
+      "image_path": 'assets/images/img_8.png',
+      "Product_name": "Camera",
+    },
+    {
+      "image_path": 'assets/images/img_10.png',
+      "Product_name": "Downloads",
+    },
+    {
+      "image_path": 'assets/images/img_11.png',
+      "Product_name": "Others",
+    }
+  ];
   List products = [
     {
       "Product_name": "AI Avatar Generator",
@@ -718,6 +736,329 @@ class _EnhanceState extends State<Enhance> {
                         height: 20,
                       ),
                       //all photos
+                      // SizedBox(
+                      //   height: 80,
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemCount: categorys.length,
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return   Row(
+                      //         children: [
+                      //           Column(
+                      //             children: [
+                      //               GestureDetector(
+                      //                 onTap: () {
+                      //                   ImagePicker1(source: ImageSource.gallery).pick(
+                      //                     onPick: (File? image) {
+                      //                       if (image != null) {
+                      //                         appImageProvider.changeImageFile(image);
+                      //                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                      //                       }
+                      //                     },
+                      //                   );
+                      //                 },
+                      //
+                      //                 // onTap: () async {
+                      //                 //   final pickedImage = await ImagePicker()
+                      //                 //       .pickImage(source: ImageSource.gallery);
+                      //                 //   if (pickedImage != null) {
+                      //                 //     File imageFile = File(pickedImage.path);
+                      //                 //     Navigator.push(
+                      //                 //         context,
+                      //                 //         MaterialPageRoute(
+                      //                 //             builder: (context) =>
+                      //                 //                 FilterScreen(
+                      //                 //                   imageFile: imageFile,
+                      //                 //                 )));
+                      //                 //   }
+                      //                 // },
+                      //                 // onTap: (){
+                      //                 //   all = true;
+                      //                 //   jackets = false;
+                      //                 //   shoes = false;
+                      //                 //   setState(() {
+                      //                 //
+                      //                 //   });
+                      //                 // },
+                      //                 // onTap: () {
+                      //                 //   ImagePicker1(source: ImageSource.gallery).pick(
+                      //                 //     onPick: (File? image) {
+                      //                 //       if (image != null) {
+                      //                 //         appImageProvider.changeImageFile(image);
+                      //                 //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                      //                 //       }
+                      //                 //     },
+                      //                 //   );
+                      //                 // },
+                      //                 child:
+                      //                 // Material(
+                      //                 //    elevation: 3.0,
+                      //                 //   borderRadius: BorderRadius.circular(10),
+                      //                 //  // color: all? Colors.deepPurple[200] : Colors.white,
+                      //                 //   //  color: selectedCategoryProvider.selectedCategory == index
+                      //                 //   //      ? Colors.white
+                      //                 //   //      : Colors.white.withOpacity(0.4),
+                      //                 //   child: Container(
+                      //                 //     height: 55,
+                      //                 //     width: 55,
+                      //                 //     decoration: BoxDecoration(
+                      //                 //       borderRadius: BorderRadius.circular(10),
+                      //                 //       color: Colors.deepPurple[100],
+                      //                 //     ),
+                      //                 //     child:
+                      //                 //     // Padding(
+                      //                 //     //   padding: const EdgeInsets.all(8.0),
+                      //                 //     //   child:
+                      //                 //     //   Icon(Icons.border_all_outlined),
+                      //                 //     // ),
+                      //                 //     Image.asset('assets/images/img_8.png',height: 5,width: 5,),
+                      //                 //   ),
+                      //                 // ),
+                      //                 Material(
+                      //                   elevation: 3.0,
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                   child: Container(
+                      //                     height: 55,
+                      //                     width: 55,
+                      //                     decoration: BoxDecoration(
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       color: Colors.deepPurple[100],
+                      //                     ),
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(12.0),
+                      //                       child: Image.asset(
+                      //                         '${categorys[index]['image_path']}',
+                      //                         height:
+                      //                         5, // Adjust the height as needed
+                      //                         width:
+                      //                         5, // Adjust the width as needed
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 '${categorys[index]['Product_name']}',
+                      //                 style: TextStyle(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     fontSize: 11),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           SizedBox(
+                      //             width: 33,
+                      //           ),
+                      //           Column(
+                      //             children: [
+                      //               GestureDetector(
+                      //                 onTap: () {
+                      //                   ImagePicker1(source: ImageSource.camera).pick(
+                      //                     onPick: (File? image) {
+                      //                       if (image != null) {
+                      //                         appImageProvider.changeImageFile(image);
+                      //                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                      //                       }
+                      //                     },
+                      //                   );
+                      //                 },
+                      //                 // onTap: (){
+                      //                 //   all = true;
+                      //                 //   jackets = false;
+                      //                 //   shoes = false;
+                      //                 //   setState(() {
+                      //                 //
+                      //                 //   });
+                      //                 // },
+                      //                 child:
+                      //                 Material(
+                      //                   elevation: 3.0,
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                   // color: all? Colors.deepPurple[200] : Colors.white,
+                      //                   //  color: selectedCategoryProvider.selectedCategory == index
+                      //                   //      ? Colors.white
+                      //                   //      : Colors.white.withOpacity(0.4),
+                      //                   child: Container(
+                      //                     height: 55,
+                      //                     width: 55,
+                      //                     decoration: BoxDecoration(
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       color: Colors.deepPurple[100],
+                      //                     ),
+                      //                     child: Material(
+                      //                       elevation: 3.0,
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       child: Container(
+                      //                         height: 55,
+                      //                         width: 55,
+                      //                         decoration: BoxDecoration(
+                      //                           borderRadius:
+                      //                           BorderRadius.circular(10),
+                      //                           color: Colors.deepPurple[100],
+                      //                         ),
+                      //                         child: Padding(
+                      //                           padding: const EdgeInsets.all(8.0),
+                      //                           child: Image.asset(
+                      //                             '${categorys[index]['image_path']}',
+                      //                             height:
+                      //                             5, // Adjust the height as needed
+                      //                             width:
+                      //                             5, // Adjust the width as needed
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                     // Padding(
+                      //                     //   padding: const EdgeInsets.all(8.0),
+                      //                     //   child:
+                      //                     //   Icon(Icons.camera_alt),
+                      //                     // ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 '${categorys[index]['Product_name']}',
+                      //                 style: TextStyle(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     fontSize: 11),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           SizedBox(
+                      //             width: 32,
+                      //           ),
+                      //           Column(
+                      //             children: [
+                      //               GestureDetector(
+                      //                 // onTap: (){
+                      //                 //   all = true;
+                      //                 //   jackets = false;
+                      //                 //   shoes = false;
+                      //                 //   setState(() {
+                      //                 //
+                      //                 //   });
+                      //                 // },
+                      //                 onTap: () {
+                      //                   Navigator.push(
+                      //                       context,
+                      //                       MaterialPageRoute(
+                      //                           builder: (context) =>
+                      //                               Download()));
+                      //                 },
+                      //                 child: Material(
+                      //                   elevation: 3.0,
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                   // color: all? Colors.deepPurple[200] : Colors.white,
+                      //                   //  color: selectedCategoryProvider.selectedCategory == index
+                      //                   //      ? Colors.white
+                      //                   //      : Colors.white.withOpacity(0.4),
+                      //                   child: Container(
+                      //                     height: 55,
+                      //                     width: 55,
+                      //                     decoration: BoxDecoration(
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       color: Colors.deepPurple[100],
+                      //                     ),
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(15.0),
+                      //                       child: Image.asset(
+                      //                         '${categorys[index]['image_path']}',
+                      //                         height:
+                      //                         5, // Adjust the height as needed
+                      //                         width:
+                      //                         5, // Adjust the width as needed
+                      //                       ),
+                      //                     ),
+                      //                     // Padding(
+                      //                     //   padding: const EdgeInsets.all(8.0),
+                      //                     //   child:
+                      //                     //   Icon(Icons.download_for_offline),
+                      //                     // ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 '${categorys[index]['Product_name']}',
+                      //                 style: TextStyle(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     fontSize: 11),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           SizedBox(
+                      //             width: 30,
+                      //           ),
+                      //           Column(
+                      //             children: [
+                      //               GestureDetector(
+                      //                 onTap: () {
+                      //                   Navigator.push(
+                      //                       context,
+                      //                       MaterialPageRoute(
+                      //                           builder: (context) =>
+                      //                               SecondHome()));
+                      //                 },
+                      //                 // onTap: (){
+                      //                 //   all = true;
+                      //                 //   jackets = false;
+                      //                 //   shoes = false;
+                      //                 //   setState(() {
+                      //                 //
+                      //                 //   });
+                      //                 // },
+                      //                 child: Material(
+                      //                   elevation: 3.0,
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                   // color: all? Colors.deepPurple[200] : Colors.white,
+                      //                   //  color: selectedCategoryProvider.selectedCategory == index
+                      //                   //      ? Colors.white
+                      //                   //      : Colors.white.withOpacity(0.4),
+                      //                   child: Container(
+                      //                     height: 55,
+                      //                     width: 55,
+                      //                     decoration: BoxDecoration(
+                      //                       borderRadius: BorderRadius.circular(10),
+                      //                       color: Colors.deepPurple[100],
+                      //                     ),
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(14.0),
+                      //                       child: Image.asset(
+                      //                         '${categorys[index]['image_path']}',
+                      //                         height:
+                      //                         5, // Adjust the height as needed
+                      //                         width:
+                      //                         5, // Adjust the width as needed
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 '${categorys[index]['Product_name']}',
+                      //                 style: TextStyle(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     fontSize: 11),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       );
+                      //     },
+                      //
+                      //
+                      //   ),
+                      // ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -1033,6 +1374,7 @@ class _EnhanceState extends State<Enhance> {
                           ],
                         ),
                       ),
+
                       SizedBox(
                         height: 15,
                       ),

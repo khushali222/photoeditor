@@ -67,6 +67,9 @@ dependencies:
   text_editor: ^0.7.0
   shimmer: ^3.0.0
   ruler_picker_bn: ^0.0.6
+  toast: ^0.3.0
+  shared_preferences: ^2.2.3
+  flutter_watermark: ^1.0.2
 
 
 dev_dependencies:
