@@ -509,21 +509,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Uint8List originalImage;
   bool _isSaving = false;
-
-
   @override
   void initState() {
     super.initState();
     _checkAuthState();
+   // checkUserStatus();
     originalImage = Provider.of<AppImageProvider>(context, listen: false).currentImage!;
   }
-
   void _revertImage() {
     final appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
     // Revert the image to its original state
     appImageProvider.updateImage(originalImage);
   }
-
   void _checkAuthState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
@@ -538,6 +535,37 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+  // Future<void> checkUserStatus() async {
+  //   // Get the current user
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //
+  //   if (user != null) {
+  //     // User is signed in, check their plan purchase status
+  //     DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+  //     bool hasPremiumPlan = userData.data()?['hasPremiumPlan'] ?? false;
+  //
+  //     if (hasPremiumPlan) {
+  //       // User has purchased a premium plan, navigate to the home screen
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => Enhance()), // Replace HomeScreen with your authenticated screen
+  //       );
+  //     } else {
+  //       // User has not purchased a premium plan, navigate to the login screen
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => PremiumPlanScreen()), // Replace LoginScreen with your login screen
+  //       );
+  //     }
+  //   } else {
+  //     // User is not signed in, navigate to the login screen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => PremiumPlanScreen()), // Replace LoginScreen with your login screen
+  //     );
+  //   }
+  // }
+
 
   // void _showSaveOptions(BuildContext context) {
   //   final RenderBox button = context.findRenderObject() as RenderBox;
@@ -579,6 +607,29 @@ class _HomeScreenState extends State<HomeScreen> {
   //     ],
   //   );
   // }
+  Future<bool> isPremiumPlanPurchased() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // User is not authenticated, handle accordingly
+      return false;
+    }
+
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    return snapshot.exists && snapshot.data()?['premium_plan_purchased'] == true;
+  }
+
+// Function to mark the premium plan as purchased
+  Future<void> markPremiumPlanAsPurchased() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // User is not authenticated, handle accordingly
+      return;
+    }
+
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'premium_plan_purchased': true,
+    }, SetOptions(merge: true));
+  }
   void _showSaveOptions(BuildContext context) {
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
@@ -587,9 +638,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final RelativeRect position = RelativeRect.fromLTRB(
       buttonTopRight.dx,
-      buttonTopRight.dy + kToolbarHeight + 40, // Adjust position below app bar
-      buttonTopRight.dx + 4, // Adjust the horizontal offset as needed
-      buttonTopRight.dy + kToolbarHeight + 60, // Adjust the total height of the menu by increasing this value
+      buttonTopRight.dy + kToolbarHeight + 40,
+      buttonTopRight.dx + 4,
+      buttonTopRight.dy + kToolbarHeight + 60,
     );
 
     showMenu(
@@ -611,31 +662,53 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Icon(Icons.hd, color: Colors.black),
             title: Text('HD Save'),
           ),
-          onTap: () {
+          onTap: () async {
             // Navigate to PremiumPlanScreen
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen())).then((value) {
-              // Handle result from PremiumPlanScreen
-              if (value == true) {
-                // Premium plan purchased, proceed with HD save
-                _saveImageToGalleryhd(context);
-              } else {
-                // Premium plan not purchased
-                Fluttertoast.showToast(
-                  msg: "Premium plan not purchased.",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                );
-              }
-            });
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen())).then((value) {
+            //   // Handle result from PremiumPlanScreen
+            //   if (value == true) {
+            //     // Premium plan purchased, proceed with HD save
+            //     _saveImageToGalleryhd(context);
+            //   } else {
+            //     // Premium plan not purchased
+            //     Fluttertoast.showToast(
+            //       msg: "Premium plan not purchased.",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.BOTTOM,
+            //       backgroundColor: Colors.red,
+            //       textColor: Colors.white,
+            //     );
+            //   }
+            // });
+            bool isPurchased = await isPremiumPlanPurchased();
+            if (isPurchased) {
+              // Premium plan purchased, proceed with HD save
+              _saveImageToGalleryhd(context);
+            } else {
+              // Premium plan not purchased
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PremiumPlanScreen())).then((value) async {
+                // Handle result from PremiumPlanScreen
+                if (value == true) {
+                  // Premium plan purchased, proceed with HD save
+                  await markPremiumPlanAsPurchased();
+                  _saveImageToGalleryhd(context);
+                } else {
+                  // Premium plan not purchased
+                  Fluttertoast.showToast(
+                    msg: "Premium plan not purchased.",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                  );
+                }
+              });
+            }
           },
         ),
       ],
     );
   }
-
-
   void _saveImageToGallery(BuildContext context) async {
     final appImageProvider = Provider.of<AppImageProvider>(context, listen: false);
     if (appImageProvider.currentImage != null) {

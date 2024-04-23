@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/login.dart';
 import 'package:projects/screen/premiumplan_screen.dart';
+import 'package:projects/widgets/plan_details.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Setting extends StatefulWidget {
+
   const Setting({super.key});
 
   @override
@@ -12,6 +14,8 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+ 
+
    _logout() async {
     await FirebaseAuth.instance.signOut();
      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
@@ -244,15 +248,15 @@ class _SettingState extends State<Setting> {
                           child:
                           GestureDetector(
                             onTap: (){
-                              var options = {
-                                'key': 'rzp_test_RsqV5b0NEAwbWT',
-                                'amount': 1 * 100, //in the smallest currency sub-unit.
-                                'name': 'Acme Corp.',
-                                'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
-                                'description': 'Fine T-Shirt',
-                                'timeout': 60, // in seconds
-                              };
-                              _razorpay.open(options);
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>Plan_Details(
+                                   arguments: PlanDetailsArguments(
+                                     planName: "Photo Me Pro",
+                                     duration: "1 month",
+                                     price: 10,
+                               ),
+                               ),
+                               ),
+                              );
                             },
                             child: Material(
                               elevation: 4,
@@ -270,7 +274,7 @@ class _SettingState extends State<Setting> {
                                     Row(
                                       children: [
                                         SizedBox(width: 20,),
-                                        Text("Payment",style: TextStyle(
+                                        Text("Plan Details",style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16
                                         ),),

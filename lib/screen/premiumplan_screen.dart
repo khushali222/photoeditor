@@ -62,8 +62,12 @@ class _PremiumPlanScreenState extends State<PremiumPlanScreen> {
           ),
         ),
       ),
-    );
+    ).then((value) {
+      // Set result to indicate premium plan purchased
+      Navigator.pop(context, true);
+    });
   }
+
 
 
   void _handlePaymentError(PaymentFailureResponse response) {

@@ -64,7 +64,18 @@ class _signupState extends State<signup> {
 
     }
   }
+  void updatePremiumPlan(String userId, String plan) async {
+    // Get a reference to the user document
+    DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
+    try {
+      // Update the premiumPlan field
+      await userRef.update({'premiumPlan': plan});
+      print('Premium plan updated successfully.');
+    } catch (e) {
+      print('Error updating premium plan: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // nameController.text = widget.name;
