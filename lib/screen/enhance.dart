@@ -19,6 +19,7 @@ import '../setting.dart';
 import '../startscreen.dart';
 import '../widgets/homescreen.dart';
 import '../widgets/image_picker.dart';
+import '../widgets/plan_details.dart';
 import '../widgets/provider.dart';
 import 'download.dart';
 
@@ -246,7 +247,15 @@ class _EnhanceState extends State<Enhance> {
                       ),
                       GestureDetector(
                          onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPlanScreen()));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Plan_Details(
+                             arguments: PlanDetailsArguments(
+                               planName: "Photo Me Pro",
+                               duration: "1 month",
+                               price: 10,
+                             ),
+                           ),
+                           ),
+                           );
                          },
                         child: Stack(children: [
                           Material(

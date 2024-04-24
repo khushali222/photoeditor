@@ -610,22 +610,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> isPremiumPlanPurchased() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      // User is not authenticated, handle accordingly
       return false;
     }
-
     DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     return snapshot.exists && snapshot.data()?['premium_plan_purchased'] == true;
   }
 
-// Function to mark the premium plan as purchased
   Future<void> markPremiumPlanAsPurchased() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       // User is not authenticated, handle accordingly
       return;
     }
-
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'premium_plan_purchased': true,
     }, SetOptions(merge: true));
