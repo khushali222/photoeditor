@@ -489,6 +489,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:projects/widgets/provider.dart';
 import 'package:projects/widgets/remove_background.dart';
+import 'package:projects/widgets/remove_screen.dart';
 import 'package:projects/widgets/sticker.dart';
 import 'package:projects/widgets/text_screen.dart';
 import 'package:provider/provider.dart';
@@ -701,8 +702,7 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             }
           },
-        ),
-      ],
+        ),],
     );
   }
   void _saveImageToGallery(BuildContext context) async {
@@ -712,7 +712,6 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _isSaving = true; // Set _isSaving to true before saving
         });
-
         // Upload the image to cloud storage (Firebase Storage)
         final firebase_storage.Reference storageRef =
         firebase_storage.FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}.png');
@@ -721,11 +720,9 @@ class _HomeScreenState extends State<HomeScreen> {
           firebase_storage.SettableMetadata(contentType: 'image/png'),
         );
         await uploadTask;
-
         // Get download URL of the uploaded image
         final String downloadURL = await storageRef.getDownloadURL();
         print(downloadURL);
-
         // Save the image to the device's gallery
         final result = await ImageGallerySaver.saveImage(Uint8List.fromList(appImageProvider.currentImage!),
           name: 'my_image.png',
@@ -811,7 +808,6 @@ class _HomeScreenState extends State<HomeScreen> {
           'imageUrl': downloadURL,
           'uploadTime': uploadTime.toIso8601String(),
         });
-
         // Show a snackbar to indicate success
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Image saved Gallery'),
@@ -867,7 +863,6 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(onPressed: (){
               _showSaveOptions(context);
             }, child: Text("Save",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)),
-            
             IconButton(
               onPressed: _revertImage,
               icon: Icon(Icons.undo, color: Colors.white),
@@ -943,7 +938,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.remove,
                             'Back',
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewApiScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewApiScreen1()));
                             }),
                       ],
                     ),
