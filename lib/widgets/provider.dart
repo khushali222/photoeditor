@@ -111,14 +111,11 @@ class AppImageProvider extends ChangeNotifier {
     _imageUrl = imageUrl; // Set the image URL after the file operation is complete
     notifyListeners();
   }
-
   void setNewImageUrl(String url) {
     _newImageUrl = url;
     notifyListeners();
   }
-
-   // Initialize _imageUrl with an empty string
-
+  // Initialize _imageUrl with an empty string
   void setImageUrl(String url) {
     _imageUrl = url;
     notifyListeners();

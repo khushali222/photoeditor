@@ -801,7 +801,6 @@ class _NewApiScreenState extends State<NewApiScreen> {
         await http.MultipartFile.fromPath('b_video', _selectedImage!.path),
       );
     }
-
     try {
       var response = await request.send();
       print(response);
