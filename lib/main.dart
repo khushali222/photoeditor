@@ -11,7 +11,7 @@ import 'package:projects/widgets/provider.dart';
 import 'package:projects/wrap.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-import 'background.dart';
+
 import 'dashbord.dart';
 import 'homepage.dart';
 import 'login.dart';

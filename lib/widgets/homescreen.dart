@@ -488,7 +488,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:projects/widgets/provider.dart';
-import 'package:projects/widgets/remove_background.dart';
+
 import 'package:projects/widgets/remove_screen.dart';
 import 'package:projects/widgets/sticker.dart';
 import 'package:projects/widgets/text_screen.dart';
