@@ -704,7 +704,7 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 58,
+        height: 100,
         width: double.infinity,
         color: Colors.black,
         child: SafeArea(
@@ -715,7 +715,6 @@ class _Adjustment_ScreenState extends State<Adjustment_Screen> {
                 SizedBox(
                   width: 20,
                 ),
-
                 // _BottomButton(
                 //     Icons.auto_fix_high,
                 //     'Auto',

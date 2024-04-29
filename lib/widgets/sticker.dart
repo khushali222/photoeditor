@@ -147,7 +147,7 @@ class _StickerScreenState extends State<StickerScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset(icon, width: 30),
+              child: Image.asset(icon, width: 23),
             ),
           ],
         ),

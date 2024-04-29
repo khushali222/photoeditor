@@ -98,40 +98,41 @@ class _NewApiScreenState extends State<NewApiScreen1> {
       body:
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Screenshot(
-            controller: screenshotController,
-            child: Consumer<AppImageProvider>(
-              builder: (BuildContext context, value, Widget? child) {
-                if (newimageUrl != null) {
-                  // Display the background-removed image if available
-                  return Column(
-                    children: [
-                      Image.network(
-                        newimageUrl!,
-                        // Assuming newimageUrl contains the URL of the background-removed image
-                        fit: BoxFit.cover,
-                      ),
-                    ],
+          Center(
+            child: Screenshot(
+              controller: screenshotController,
+              child: Consumer<AppImageProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+                  if (newimageUrl != null) {
+                    // Display the background-removed image if available
+                    return Column(
+                      children: [
+                        Image.network(
+                          newimageUrl!,
+                          // Assuming newimageUrl contains the URL of the background-removed image
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    );
+                  } else if (value.currentImage != null) {
+                    // Display the original image if background-removed image is not available yet
+                    return Column(
+                      children: [
+                        Image.memory(
+                          value.currentImage!,
+                          // Assuming currentImage is already Uint8List
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    );
+                  }
+                  // Display a loading indicator if no image is available yet
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                } else if (value.currentImage != null) {
-                  // Display the original image if background-removed image is not available yet
-                  return Column(
-                    children: [
-                      Image.memory(
-                        value.currentImage!,
-                        // Assuming currentImage is already Uint8List
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  );
-                }
-                // Display a loading indicator if no image is available yet
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
           ),
         ],
@@ -142,55 +143,50 @@ class _NewApiScreenState extends State<NewApiScreen1> {
       width: double.infinity,
       color: Colors.black,
       child: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-                SizedBox(width: 60,),
-              Consumer<AppImageProvider>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return SizedBox(
-                      height: 40,
-                      child:
-                      ElevatedButton(
-                        onPressed: () async {
-                          // Convert the image data to a base64 string
-                          String imageDataString = base64Encode(value.currentImage!);
-                          print(imageDataString);
-                          try {
-                            // Upload the image to Firebase Storage
-                            String? downloadUrl = await uploadBase64ImageToFirebase(imageDataString);
-                            if (downloadUrl != null) {
-                              // Display a message indicating successful upload
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(content: Text('Image uploaded successfully to Firebase Storage')),
-                              // );
-                              // Remove background using the Firebase Storage download URL
-                              await removeBackground(downloadUrl);
-                            } else {
-                              // Display a message indicating upload failure
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(content: Text('Error uploading image to Firebase Storage')),
-                              // );
-                            }
-                          } catch (e) {
-                            // Handle any errors
-                            print("Error: $e");
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Error: $e')),
-                            );
+        child: Center(
+          child: Consumer<AppImageProvider>(
+              builder: (BuildContext context, value, Widget? child) {
+                return
+                  SizedBox(
+                    height: 40,
+                    child:
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Convert the image data to a base64 string
+                        String imageDataString = base64Encode(value.currentImage!);
+                        print(imageDataString);
+                        try {
+                          // Upload the image to Firebase Storage
+                          String? downloadUrl = await uploadBase64ImageToFirebase(imageDataString);
+                          if (downloadUrl != null) {
+                            // Display a message indicating successful upload
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(content: Text('Image uploaded successfully to Firebase Storage')),
+                            // );
+                            // Remove background using the Firebase Storage download URL
+                            await removeBackground(downloadUrl);
+                          } else {
+                            // Display a message indicating upload failure
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(content: Text('Error uploading image to Firebase Storage')),
+                            // );
                           }
-                        },
-                        style: ButtonStyle(
+                        } catch (e) {
+                          // Handle any errors
+                          print("Error: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error: $e')),
+                          );
+                        }
+                      },
+                      style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(Colors.black)
-                        ),
-                        child: Text('Tap to Remove Background',style: TextStyle(fontSize: 16,color: Colors.deepPurple[200]),),
                       ),
+                      child: Text('Tap to Remove Background',style: TextStyle(fontSize: 16,color: Colors.deepPurple[200]),),
+                    ),
 
-                    );
-                  }
-              ),
-            ],
+                  );
+              }
           ),
         ),
       ),
@@ -226,7 +222,6 @@ class _NewApiScreenState extends State<NewApiScreen1> {
     }
   }
 }
-
 class Const_value {
   String cdn_url_image_display = "https://cdn.dohost.in//upload//";
   String cdn_url_upload = "https://cdn.dohost.in/image_upload.php/";

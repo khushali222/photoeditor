@@ -1613,8 +1613,7 @@ class _EnhanceState extends State<Enhance> {
                       SizedBox(
                         height: 10,
                       ),
-
-                  Padding(
+                      Padding(
                     padding: const EdgeInsets.only(left: 13, right: 13),
                     child: SizedBox(
                       height: 100,
@@ -1788,7 +1787,6 @@ class _EnhanceState extends State<Enhance> {
                     ),
                   ),
                       SizedBox(height: 10,),
-
                       // ElevatedButton(
                       //   onPressed: (){
                       //     Navigator.push(context, MaterialPageRoute(builder: (context)=>StartScreen()));

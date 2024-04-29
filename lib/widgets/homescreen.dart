@@ -621,7 +621,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .doc(user.uid)
         .get();
     return snapshot.exists &&
-        snapshot.data()?['premium_plan_purchased'] == true;
+        snapshot.data()?['premium'] == true;
   }
 
   Future<void> markPremiumPlanAsPurchased() async {
@@ -631,7 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-      'premium_plan_purchased': true,
+      'premium': true,
     }, SetOptions(merge: true));
   }
 

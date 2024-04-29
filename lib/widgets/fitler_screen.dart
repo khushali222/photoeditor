@@ -408,7 +408,7 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       bottomNavigationBar: Container(
         width: double.infinity,
-        height: 100,
+        height: 119,
         color: Colors.black,
         child: SafeArea(
             child: Consumer<AppImageProvider>(
