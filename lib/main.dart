@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider(create: (context)=>ImageProviderPicker()),
           ChangeNotifierProvider(create: (context)=>AppImageProvider()),
+          ChangeNotifierProvider(create: (context)=>ProfileNameProvider()),
     ],
     child:  MaterialApp(
       debugShowCheckedModeBanner: false,

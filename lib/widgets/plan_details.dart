@@ -83,15 +83,12 @@ class Plan_Details extends StatefulWidget {
 }
 
 class _Plan_DetailsState extends State<Plan_Details> {
-
   bool _userHasPurchasedPlan = true;
-
   @override
   void initState() {
     super.initState();
     _checkUserPlanPurchase();
   }
-
   Future<void> _checkUserPlanPurchase() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -102,7 +99,6 @@ class _Plan_DetailsState extends State<Plan_Details> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,26 +108,52 @@ class _Plan_DetailsState extends State<Plan_Details> {
         title: Text("Plan Details"),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListTile(
-            title: Text("Plan Name: ${widget.arguments.planName}"),
+          SizedBox(
+            height: 30,
           ),
-          ListTile(
-            title: Text("Duration: ${widget.arguments.duration}"),
+          Image.asset('assets/images/img_24.png',width: double.infinity,height: 200,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                title: Text("Plan Name:  ${widget.arguments.planName}"),
+              ),
+              ListTile(
+                title: Text("Duration:  ${widget.arguments.duration}"),
+              ),
+              ListTile(
+                title: Text("Price:  ${widget.arguments.price}"),
+              ),
+            ],
           ),
-          ListTile(
-            title: Text("Price: ${widget.arguments.price}"),
+          SizedBox(
+            height: 20,
           ),
-
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(width: 20,),
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPlanScreen()));
-                  },
-                  child: Text("Upgrade the plan"),
+                Container(
+                  height: 45,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPlanScreen()));
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.deepPurple[200]),
+                    ),
+                    child: Text("Upgrade the plan",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
+                  ),
                 ),
               ],
             ),

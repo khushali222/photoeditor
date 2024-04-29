@@ -73,7 +73,7 @@ class _NewApiScreenState extends State<NewApiScreen1> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          "Background Remove Screen",
+          "Background Remove",
           style: TextStyle(color: Colors.white,fontSize: 18),
         ),
         centerTitle: true,
@@ -82,7 +82,8 @@ class _NewApiScreenState extends State<NewApiScreen1> {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => HomeScreen()));
             },
-            icon: Icon(Icons.close, color: Colors.white)),
+            icon: Icon(Icons.close, color: Colors.white),
+        ),
         actions: [
           IconButton(
               onPressed: () async {
@@ -135,10 +136,8 @@ class _NewApiScreenState extends State<NewApiScreen1> {
           ),
         ],
       ),
-
       bottomNavigationBar:
-
-       Container(
+      Container(
       height: 80,
       width: double.infinity,
       color: Colors.black,
@@ -147,7 +146,7 @@ class _NewApiScreenState extends State<NewApiScreen1> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-                SizedBox(width: 100,),
+                SizedBox(width: 60,),
               Consumer<AppImageProvider>(
                   builder: (BuildContext context, value, Widget? child) {
                     return SizedBox(
@@ -182,13 +181,15 @@ class _NewApiScreenState extends State<NewApiScreen1> {
                             );
                           }
                         },
-                        child: Text('Remove Background'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(Colors.black)
+                        ),
+                        child: Text('Tap to Remove Background',style: TextStyle(fontSize: 16,color: Colors.deepPurple[200]),),
                       ),
 
                     );
                   }
               ),
-
             ],
           ),
         ),

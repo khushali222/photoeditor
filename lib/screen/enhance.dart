@@ -21,6 +21,7 @@ import '../widgets/homescreen.dart';
 import '../widgets/image_picker.dart';
 import '../widgets/plan_details.dart';
 import '../widgets/provider.dart';
+import '../widgets/remove_screen.dart';
 import 'download.dart';
 
 class Enhance extends StatefulWidget {
@@ -158,6 +159,7 @@ class _EnhanceState extends State<Enhance> {
   @override
   Widget build(BuildContext context) {
     Uint8List? _image = context.watch<ImageProviderPicker>().image;
+    String profileName = context.watch<ProfileNameProvider>().profileName;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -206,12 +208,23 @@ class _EnhanceState extends State<Enhance> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 7,
+                      //     ),
+                      //     Text(profileName,style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),),
+                      //   ],
+                      // ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 7,
+                          SizedBox(width: 7),
+                          Text(
+                            profileName.isNotEmpty ? profileName : 'Khushali Sarvaiya',
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
                           ),
-                          Text("Khushali Sarvaiya"),
                         ],
                       ),
                     ],
@@ -243,7 +256,7 @@ class _EnhanceState extends State<Enhance> {
                         ),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 15,
                       ),
                       GestureDetector(
                          onTap: (){
@@ -1332,7 +1345,7 @@ class _EnhanceState extends State<Enhance> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SecondHome()));
+                                                NewApiScreen1()));
                                   },
                                   // onTap: (){
                                   //   all = true;

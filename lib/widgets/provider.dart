@@ -150,3 +150,4 @@ class AppImageProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners that the image has been updated
   }
 }
+
